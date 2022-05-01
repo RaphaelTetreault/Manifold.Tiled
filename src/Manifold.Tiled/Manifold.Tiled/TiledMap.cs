@@ -25,9 +25,12 @@
         public string? TiledVersion { get; set; } = null;
 
         /// <summary>
-        /// Map orientation. Tiled supports “orthogonal”, “isometric”, “staggered” and “hexagonal” (since 0.11).
+        /// Map orientation. Tiled supports “orthogonal”, “isometric”, “staggered” and “hexagonal”.
         /// </summary>
-        public MapOrientation Orientation { get; set; }
+        /// <remarks>
+        /// Available since Tiled 0.11)
+        /// </remarks>
+        public Orientation Orientation { get; set; }
 
         /// <summary>
         /// The order in which tiles on tile layers are rendered.
