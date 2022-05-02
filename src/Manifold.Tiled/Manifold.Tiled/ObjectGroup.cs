@@ -15,5 +15,7 @@
         public int OffsetX { get; set; }
         public int OffsetY { get; set; }
         public DrawOrder DrawOrder { get; set; } = DrawOrder.TopDown;
+        public Property? Property { get; set; } = null;
+        public 
     }
 }

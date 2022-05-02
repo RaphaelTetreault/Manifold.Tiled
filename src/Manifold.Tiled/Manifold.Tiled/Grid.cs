@@ -4,7 +4,8 @@
     /// This element is only used in case of isometric orientation, and determines
     /// how tile overlays for terrain and collision information are rendered.
     /// </summary>
-    public class Grid
+    public class Grid :
+        IGrid
     {
         /// <summary>
         /// Orientation of the grid for the tiles in this tileset.
