@@ -3,6 +3,10 @@
     /// <summary>
     /// Represents an elipse defined by its bounds.
     /// </summary>
+    /// <remarks>
+    /// See <see href=""/>
+    /// for more information.
+    /// </remarks>
     public class Ellipse :
         IBounded
     {

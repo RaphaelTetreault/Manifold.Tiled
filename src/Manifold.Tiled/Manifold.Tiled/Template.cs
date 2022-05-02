@@ -1,5 +1,12 @@
 ﻿namespace Manifold.Tiled
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <remarks>
+    /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#template"/>
+    /// for more information.
+    /// </remarks>
     public class Template
     {
         /*
