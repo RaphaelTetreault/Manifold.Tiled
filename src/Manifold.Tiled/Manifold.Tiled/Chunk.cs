@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Manifold.Tiled
+﻿namespace Manifold.Tiled
 {
-    public class Chunk
+    public class Chunk :
+        IRect
     {
         /// <summary>
         /// The x coordinate of the chunk in tiles.
