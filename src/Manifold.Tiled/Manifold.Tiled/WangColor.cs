@@ -16,7 +16,7 @@ namespace Manifold.Tiled
         /// <summary>
         /// The color in #RRGGBB format
         /// </summary>
-        public TiledColor Color { get; set; }
+        public Color Color { get; set; }
 
         /// <summary>
         /// The tile ID of the tile representing this color.

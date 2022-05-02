@@ -7,7 +7,7 @@
     /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#map"/>
     /// for further inormation.
     /// </remarks>
-    public class TiledMap
+    public class Map
     {
         /// <summary>
         /// The TMX format version. Was “1.0” so far, and will be incremented to match minor Tiled releases.
@@ -109,7 +109,7 @@
         /// May include alpha value since 0.15.
         /// Defaults to fully transparent black.
         /// </remarks>
-        public TiledColor TiledColor { get; set; } = new TiledColor(0, 0, 0, 255);
+        public Color TiledColor { get; set; } = new Color(0, 0, 0, 255);
 
         /// <summary>
         /// Stores the next available ID for new layers.

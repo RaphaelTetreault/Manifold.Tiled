@@ -1,16 +1,16 @@
 ﻿namespace Manifold.Tiled
 {
-    public struct TiledColor
+    public struct Color
     {
         public byte a;
         public byte r;
         public byte g;
         public byte b;
 
-        public TiledColor() : this(0, 0, 0, 0) { }
-        public TiledColor(byte intensity) : this(intensity, intensity, intensity, 0) { }
-        public TiledColor(byte r, byte g, byte b) : this(r, g, b, 0) { }
-        public TiledColor(byte r, byte g, byte b, byte a)
+        public Color() : this(0, 0, 0, 0) { }
+        public Color(byte intensity) : this(intensity, intensity, intensity, 0) { }
+        public Color(byte r, byte g, byte b) : this(r, g, b, 0) { }
+        public Color(byte r, byte g, byte b, byte a)
         {
             this.a = a;
             this.r = r;

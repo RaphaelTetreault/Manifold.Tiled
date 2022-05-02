@@ -25,7 +25,7 @@
         /// <remarks>
         /// Optional.
         /// </remarks>
-        public TiledColor? Trans { get; set; } = null;
+        public Color? Trans { get; set; } = null;
 
         /// <summary>
         /// The image width in pixels.
