@@ -1,7 +1,7 @@
 ﻿namespace Manifold.Tiled
 {
     /// <summary>
-    /// 
+    /// Represents an elipse defined by its bounds.
     /// </summary>
     public class Ellipse :
         IBounded
