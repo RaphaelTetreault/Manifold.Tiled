@@ -1,7 +1,7 @@
 ﻿namespace Manifold.Tiled
 {
     /// <summary>
-    /// 
+    /// Represents an element with a start coordinate (x,y) and a width and height.
     /// </summary>
     public interface IBounded
     {

@@ -1,10 +1,10 @@
 ﻿namespace Manifold.Tiled
 {
     /// <summary>
-    /// 
+    /// Defines a Wang tile, by referring to a tile in the tileset and associating it with a certain Wang ID.
     /// </summary>
     /// <remarks>
-    /// See <see href=""/>
+    /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#wangtile"/>
     /// for more information.
     /// </remarks>
     public class WangTile
@@ -15,7 +15,7 @@
         public int TileID { get; set; }
 
         /// <summary>
-        /// 
+        /// The Wang Tile global ID.
         /// </summary>
         /// <remarks>
         /// The Wang ID, given by a comma-separated list of indexes (starting from 1,

@@ -1,10 +1,10 @@
 ﻿namespace Manifold.Tiled
 {
     /// <summary>
-    /// 
+    /// One frame of animation. Tiled calls this 'frame'.
     /// </summary>
     /// <remarks>
-    /// See <see href=""/>
+    /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#frame"/>
     /// for more information.
     /// </remarks>
     public struct AnimationFrame

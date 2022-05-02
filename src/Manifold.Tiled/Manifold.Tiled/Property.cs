@@ -1,7 +1,7 @@
 ﻿namespace Manifold.Tiled
 {
     /// <summary>
-    /// 
+    /// A property which can take the forma of varies types of variables. 
     /// </summary>
     /// <remarks>
     /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#property"/>

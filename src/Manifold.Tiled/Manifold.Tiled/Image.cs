@@ -1,10 +1,13 @@
 ﻿namespace Manifold.Tiled
 {
     /// <summary>
-    /// 
+    /// Represents an image.
     /// </summary>
     /// <remarks>
-    /// See <see href=""/>
+    /// Note that it is not currently possible to use Tiled to create maps with embedded image data,
+    /// even though the TMX format supports this.
+    /// 
+    /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#image"/>
     /// for more information.
     /// </remarks>
     public class Image

@@ -20,7 +20,7 @@
         /// <remarks>
         /// Optional.
         /// </remarks>
-        public TileType? Type { get; set; } = null;
+        public string Type { get; set; } = string.Empty;
 
         /// <summary>
         /// A percentage indicating the probability that this tile is chosen when it
@@ -30,5 +30,17 @@
         /// Defaults to 0.
         /// </remarks>
         public float Probability { get; set; } = 0;
+
+
+
+        public Properties? Properties { get; set; } = null;
+        public Image? Image { get; set; } = null;
+        public ObjectGroup? ObjectGroup { get; set; } = null;
+        public Animation? Animation { get; set; } = null;
+
+        public bool HasProperties => Properties != null;
+        public bool HasImage => Image != null;
+        public bool HasObjectGroup => ObjectGroup != null;
+        public bool HasAnimation => Animation != null;
     }
 }

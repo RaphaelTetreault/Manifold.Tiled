@@ -1,7 +1,8 @@
 ﻿namespace Manifold.Tiled
 {
     /// <summary>
-    /// 
+    /// Representes a non-grid-based element.
+    /// Objects have their coordinates and size in pixels.
     /// </summary>
     /// <remarks>
     /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#object"/>
@@ -102,11 +103,68 @@
         /// </remarks>
         public string? Template { get; set; } = null;
 
+
+
+
+        /// <summary>
+        /// A property element tied to this object.
+        /// </summary>
         public Property? Property { get; set; } = null;
+
+        /// <summary>
+        /// A ellipse element tied to this object.
+        /// </summary>
         public Ellipse? Ellipse { get; set; } = null;
+
+        /// <summary>
+        /// A point element tied to this object.
+        /// </summary>
         public Point? Point { get; set; } = null;
+
+        /// <summary>
+        /// A polygon element tied to this object.
+        /// </summary>
         public Polygon? Polygon { get; set; } = null;
+
+        /// <summary>
+        /// A polyline element tied to this object.
+        /// </summary>
         public Polyline? Polyline { get; set; } = null;
+
+        /// <summary>
+        /// A text element tied to this object.
+        /// </summary>
         public Text? Text { get; set; } = null;
+
+
+        /// <summary>
+        /// Whether or not this object has a property.
+        /// </summary>
+        public bool HasProperty => Property != null;
+
+        /// <summary>
+        /// Whether or not this object has a ellipse.
+        /// </summary>
+        public bool HasEllipse => Ellipse != null;
+
+        /// <summary>
+        /// Whether or not this object has a point.
+        /// </summary>
+        public bool HasPoint => Point != null;
+
+        /// <summary>
+        /// Whether or not this object has a polygon.
+        /// </summary>
+        public bool HasPolygon => Polygon != null;
+
+        /// <summary>
+        /// Whether or not this object has a polyline.
+        /// </summary>
+        public bool HasPolyline => Polyline != null;
+
+        /// <summary>
+        /// Whether or not this object has a text.
+        /// </summary>
+        public bool HasText => Text != null;
     }
 }

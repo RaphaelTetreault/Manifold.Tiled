@@ -4,7 +4,7 @@
     /// Contains a list of animation frames.
     /// </summary>
     /// <remarks>
-    /// See <see href=""/>
+    /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#animation"/>
     /// for more information.
     /// </remarks>
     public class Animation

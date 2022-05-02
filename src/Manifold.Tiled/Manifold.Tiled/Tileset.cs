@@ -1,10 +1,11 @@
 ﻿namespace Manifold.Tiled
 {
     /// <summary>
-    /// 
+    /// A tileset can be either based on a single image, which is cut into tiles based on the given
+    /// parameters, or a collection of images, in which case each tile defines its own image.
     /// </summary>
     /// <remarks>
-    /// See <see href=""/>
+    /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#tileset"/>
     /// for more information.
     /// </remarks>
     public class Tileset
@@ -71,5 +72,23 @@
         /// Available since Tiled 1.4.
         /// </remarks>
         public ObjectAlignment Alignment { get; set; } = ObjectAlignment.Unspecified;
+
+
+
+
+        public Image? Image { get; set; } = null;
+        public TileOffset? TileOffset { get; set; } = null;
+        public Grid? Grid { get; set; } = null;
+        public Properties? Properties { get; set; } = null;
+        public Wangsets? Wangsets { get; set; } = null;
+        public Tile[]? Tiles { get; set; } = null;
+
+
+        public bool HasImage => Image != null;
+        public bool HasTileOffset => TileOffset != null;
+        public bool HasGrid => Grid != null;
+        public bool HasProperties => Properties != null;
+        public bool HasWangsets => Wangsets != null;
+        public bool HasTiles => Tiles != null && Tiles.Length > 0;
     }
 }

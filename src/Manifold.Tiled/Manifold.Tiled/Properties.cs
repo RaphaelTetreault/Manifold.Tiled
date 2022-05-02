@@ -12,7 +12,16 @@
     /// </remarks>
     public class Properties
     {
+        /// <summary>
+        /// The property values.
+        /// </summary>
         public Property[] Values { get; set; } = new Property[0];
+
+        /// <summary>
+        /// Whether or not this object group has properties.
+        /// </summary>
+        public bool HasValues => Values != null && Values.Length > 0;
+
 
         public static Properties FromXML(string xml)
         {

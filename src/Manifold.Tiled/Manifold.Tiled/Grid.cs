@@ -5,7 +5,7 @@
     /// how tile overlays for terrain and collision information are rendered.
     /// </summary>
     /// <remarks>
-    /// See <see href=""/>
+    /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#grid"/>
     /// for more information.
     /// </remarks>
     public class Grid :

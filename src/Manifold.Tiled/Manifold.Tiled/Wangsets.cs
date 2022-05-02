@@ -10,7 +10,7 @@
     public class Wangsets
     {
         /// <summary>
-        /// 
+        /// The Wangset values.
         /// </summary>
         public Wangset[] Values { get; set; } = new Wangset[0];
     }

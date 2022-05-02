@@ -1,7 +1,7 @@
 ﻿namespace Manifold.Tiled
 {
     /// <summary>
-    /// 
+    /// Defines an element that is composed with multiple points.
     /// </summary>
     public interface IPointBased
     {

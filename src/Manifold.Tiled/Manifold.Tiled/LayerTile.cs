@@ -1,10 +1,11 @@
 ﻿namespace Manifold.Tiled
 {
     /// <summary>
-    /// 
+    /// Defines the value of a single tile on a tile layer. 
     /// </summary>
     /// <remarks>
-    /// See <see href=""/>
+    /// Not to be confused with the `tile` element inside a `tileset`.
+    /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#tmx-tilelayer-tile"/>
     /// for more information.
     /// </remarks>
     public struct LayerTile

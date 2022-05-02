@@ -1,24 +1,50 @@
-﻿namespace Manifold.Tiled
+﻿using System.Runtime.InteropServices;
+
+namespace Manifold.Tiled
 {
     /// <summary>
-    /// 
+    /// A color structure used to manage Tiled's color formats.
     /// </summary>
-    /// <remarks>
-    /// See <see href=""/>
-    /// for more information.
-    /// </remarks>
+    [StructLayout(LayoutKind.Explicit)]
     public struct Color
     {
+        /// <summary>
+        /// The raw color data in ARGB8 format.
+        /// </summary>
+        [FieldOffset(0)]
+        public uint rawARGB;
+
+        /// <summary>
+        /// Color Alpha component.
+        /// </summary>
+        [FieldOffset(0)]
         public byte a;
+
+        /// <summary>
+        /// Color Red component.
+        /// </summary>
+        [FieldOffset(1)]
         public byte r;
+
+        /// <summary>
+        /// Color Green component.
+        /// </summary>
+        [FieldOffset(2)]
         public byte g;
+
+        /// <summary>
+        /// Color Blue component.
+        /// </summary>
+        [FieldOffset(3)]
         public byte b;
+
 
         public Color() : this(0, 0, 0, 0) { }
         public Color(byte intensity) : this(intensity, intensity, intensity, 0) { }
         public Color(byte r, byte g, byte b) : this(r, g, b, 0) { }
         public Color(byte r, byte g, byte b, byte a)
         {
+            rawARGB = 0;
             this.a = a;
             this.r = r;
             this.g = g;
@@ -70,14 +96,10 @@
         {
             var color = new Color()
             {
-                a = (byte)(rawARGB >> 24),
-                r = (byte)(rawARGB >> 16),
-                g = (byte)(rawARGB >> 08),
-                b = (byte)(rawARGB >> 00),
+                rawARGB = rawARGB,
             };
             return color;
         }
-
 
         public static Color FromHexARGB(string hexString)
             => FromHex(hexString, true);

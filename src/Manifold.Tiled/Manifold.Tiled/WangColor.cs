@@ -1,10 +1,10 @@
 ﻿namespace Manifold.Tiled
 {
     /// <summary>
-    /// 
+    /// A color that can be used to define the corner and/or edge of a Wang tile.
     /// </summary>
     /// <remarks>
-    /// See <see href=""/>
+    /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#wangcolor"/>
     /// for more information.
     /// </remarks>
     public class WangColor
@@ -12,7 +12,7 @@
         /// <summary>
         /// The name of this color.
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; set; } = String.Empty;
 
         /// <summary>
         /// The color in #RRGGBB format
@@ -32,6 +32,16 @@
         /// </remarks>
         public float Probability { get; set; } = 0;
 
-        public Property? Property { get; set; } = null;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Properties? Properties { get; set; } = null;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool HasProperties => Properties != null;
     }
 }

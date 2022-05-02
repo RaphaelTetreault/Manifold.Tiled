@@ -1,10 +1,13 @@
 ﻿namespace Manifold.Tiled
 {
     /// <summary>
-    /// 
+    /// A rectangle region of a map used when the map is set to 'infinite'.
     /// </summary>
     /// <remarks>
-    /// See <see href=""/>
+    /// This is currently added only for infinite maps. The contents of a chunk element is same as
+    /// that of the data element, except it stores the data of the area specified in the attributes.
+    /// 
+    /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#chunk"/>
     /// for more information.
     /// </remarks>
     public class Chunk :

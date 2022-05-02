@@ -5,7 +5,7 @@
     /// a tile from the related tileset.
     /// </summary>
     /// <remarks>
-    /// See <see href=""/>
+    /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#tileoffset"/>
     /// for more information.
     /// </remarks>
     public struct TileOffset

@@ -1,7 +1,7 @@
 ﻿namespace Manifold.Tiled
 {
     /// <summary>
-    /// 
+    /// A Tiled map.
     /// </summary>
     /// <remarks>
     /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#map"/>
@@ -143,6 +143,9 @@
 
 
         // HELPER PROPERTIES
+        /// <summary>
+        /// 
+        /// </summary>
         public bool IsInfinite
         {
             get => Infinite > 0;

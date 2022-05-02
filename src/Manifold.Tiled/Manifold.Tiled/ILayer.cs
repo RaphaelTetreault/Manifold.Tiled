@@ -1,7 +1,7 @@
 ﻿namespace Manifold.Tiled
 {
     /// <summary>
-    /// 
+    /// Defines an element that is a layer.
     /// </summary>
     public interface ILayer :
         IBounded
