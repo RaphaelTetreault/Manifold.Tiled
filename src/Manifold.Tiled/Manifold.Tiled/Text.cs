@@ -97,6 +97,55 @@
         /// Defaults to `Top`.
         /// </remarks>
         public VerticalAlignment VAlign { get; set; } = VerticalAlignment.Top;
+
+        /// <summary>
+        /// The Text's value.
+        /// </summary>
         public string Value { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Whether word wrapping is enabled or disabled.
+        /// </summary>
+        public bool DoesWrap
+        {
+            get => Wrap > 0;
+            set => Wrap = (byte)(value ? 1 : 0);
+        }
+
+        /// <summary>
+        /// Whether the font is bold or not.
+        /// </summary>
+        public bool IsBold
+        {
+            get => Bold > 0;
+            set => Bold = (byte)(value ? 1 : 0);
+        }
+
+        /// <summary>
+        /// Whether a line should be drawn below the text or not.
+        /// </summary>
+        public bool IsUnderlined
+        {
+            get => Underline > 0;
+            set => Underline = (byte)(value ? 1 : 0);
+        }
+
+        /// <summary>
+        /// Whether a line should be drawn through the text or not.
+        /// </summary>
+        public bool IsStrikeout
+        {
+            get => Strikeout > 0;
+            set => Strikeout = (byte)(value ? 1 : 0);
+        }
+
+        /// <summary>
+        /// Whether kerning should be used while rendering the text or not.
+        /// </summary>
+        public bool UsesKerning
+        {
+            get => Kerning > 0;
+            set => Kerning = (byte)(value ? 1 : 0);
+        }
     }
 }
