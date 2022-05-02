@@ -117,7 +117,7 @@ namespace Manifold.Tiled
         /// <summary>
         /// 
         /// </summary>
-        public string? Data { get; set; }
+        public Data? Data { get; set; }
 
 
         public bool IsVisible
