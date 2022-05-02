@@ -1,7 +1,10 @@
 ﻿namespace Manifold.Tiled
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface ILayer :
-        IRect
+        IBounded
     {
         /// <summary>
         /// Unique ID of the layer.

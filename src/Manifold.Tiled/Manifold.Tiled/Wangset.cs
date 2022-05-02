@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Manifold.Tiled
+﻿namespace Manifold.Tiled
 {
     /// <summary>
     /// 
     /// </summary>
     /// <remarks>
-    /// <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#tmx-wangset"/>
+    /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#tmx-wangset"/>
+    /// for more information.
     /// </remarks>
     public class Wangset
     {

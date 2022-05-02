@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Manifold.Tiled
+﻿namespace Manifold.Tiled
 {
     /// <summary>
     /// This element is used to specify an offset in pixels, to be applied when drawing
     /// a tile from the related tileset.
     /// </summary>
+    /// <remarks>
+    /// See <see href=""/>
+    /// for more information.
+    /// </remarks>
     public struct TileOffset
     {
         /// <summary>

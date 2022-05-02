@@ -3,6 +3,10 @@
     /// <summary>
     /// Contains a list of animation frames.
     /// </summary>
+    /// <remarks>
+    /// See <see href=""/>
+    /// for more information.
+    /// </remarks>
     public class Animation
     {
         /// <summary>

@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Manifold.Tiled
+﻿namespace Manifold.Tiled
 {
-    internal class Wangsets
+    /// <summary>
+    /// Contains the list of Wang sets defined for this tileset.
+    /// </summary>
+    /// <remarks>
+    /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#wangsets"/>
+    /// for more information.
+    /// </remarks>
+    public class Wangsets
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public Wangset[] Values { get; set; } = new Wangset[0];
     }
 }

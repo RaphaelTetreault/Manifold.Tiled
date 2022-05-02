@@ -1,5 +1,8 @@
 ﻿namespace Manifold.Tiled
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface INamed
     {
         /// <summary>

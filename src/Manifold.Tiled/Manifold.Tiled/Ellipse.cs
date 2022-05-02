@@ -1,7 +1,10 @@
 ﻿namespace Manifold.Tiled
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Ellipse :
-        IRect
+        IBounded
     {
         public int X { get; set; }
         public int Y { get; set; }

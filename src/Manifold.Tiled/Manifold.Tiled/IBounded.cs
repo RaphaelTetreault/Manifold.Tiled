@@ -1,6 +1,9 @@
 ﻿namespace Manifold.Tiled
 {
-    public interface IRect
+    /// <summary>
+    /// 
+    /// </summary>
+    public interface IBounded
     {
         int X { get; set; }
         int Y { get; set; }

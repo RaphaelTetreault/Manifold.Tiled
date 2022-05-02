@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Manifold.Tiled
+﻿namespace Manifold.Tiled
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <remarks>
+    /// See <see href=""/>
+    /// for more information.
+    /// </remarks>
     public class Property
     {
     }

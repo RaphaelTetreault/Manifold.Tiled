@@ -1,6 +1,13 @@
 ﻿namespace Manifold.Tiled
 {
-    internal class Image
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <remarks>
+    /// See <see href=""/>
+    /// for more information.
+    /// </remarks>
+    public class Image
     {
         /// <summary>
         /// Used for embedded images, in combination with a data child element.

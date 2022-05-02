@@ -5,11 +5,12 @@
     /// </summary>
     /// <remarks>
     /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#object"/>
+    /// for more information.
     /// </remarks>
     public class Object :
+        IBounded,
         IIdentifyable,
-        INamed,
-        IRect
+        INamed
     {
         /// <summary>
         /// Unique ID of the object.

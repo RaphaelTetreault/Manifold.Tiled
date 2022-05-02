@@ -5,7 +5,7 @@
     /// </summary>
     /// <remarks>
     /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#map"/>
-    /// for further inormation.
+    /// for more inormation.
     /// </remarks>
     public class Map : 
         IGrid

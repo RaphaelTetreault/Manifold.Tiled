@@ -1,7 +1,14 @@
 ﻿namespace Manifold.Tiled
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <remarks>
+    /// See <see href=""/>
+    /// for more information.
+    /// </remarks>
     public class Chunk :
-        IRect
+        IBounded
     {
         /// <summary>
         /// The x coordinate of the chunk in tiles.

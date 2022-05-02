@@ -3,6 +3,10 @@
     /// <summary>
     /// 
     /// </summary>
+    /// <remarks>
+    /// See <see href=""/>
+    /// for more information.
+    /// </remarks>
     public class WangTile
     {
         /// <summary>

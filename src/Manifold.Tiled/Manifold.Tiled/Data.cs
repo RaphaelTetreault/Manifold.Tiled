@@ -5,6 +5,8 @@
     /// </summary>
     /// <remarks>
     /// When no encoding or compression is given, the tiles are stored as individual XML tile elements.
+    /// See <see href=""/>
+    /// for more information.
     /// </remarks>
     public class Data
     {
