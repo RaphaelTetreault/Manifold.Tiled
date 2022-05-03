@@ -1,4 +1,6 @@
-﻿namespace Manifold.Tiled
+﻿using System.Xml;
+
+namespace Manifold.Tiled
 {
     /// <summary>
     /// Wraps any number of custom properties. Can be used as a child of the map, tileset, tile
@@ -26,9 +28,27 @@
         public bool HasValues => Values != null && Values.Length > 0;
 
 
-        public static Properties FromXML(string xml)
+        public static Properties FromXmlNode(XmlDocument document, string xpath, XmlNode? propertiesNode)
         {
-            throw new NotImplementedException();
+            string tag = "properties";
+            if (propertiesNode is null)
+                throw new XmlNodeParseException("Node is null.");
+            if (propertiesNode.Name != tag)
+                throw new XmlNodeParseException($"Node named '{propertiesNode.Name}' is not of type '{tag}'.");
+            if (propertiesNode.Attributes is null)
+                throw new XmlNodeParseException("Node.Attributes is null.");
+
+            // Create new from XML
+            var properties = new Properties();
+            properties.Values = Property.FromXml(propertiesNode.InnerXml, "property");
+
+            return properties;
         }
+
+        public static Properties[] FromXmlNodes(XmlDocument document, string xpath)
+            => TiledXmlExtensions.FromXmlNodes(document, xpath, FromXmlNode);
+
+        public static Properties[] FromXml(string xml, string xpath)
+            => TiledXmlExtensions.FromXml(xml, xpath, FromXmlNode);
     }
 }

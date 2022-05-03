@@ -1,4 +1,6 @@
-﻿namespace Manifold.Tiled
+﻿using System.Xml;
+
+namespace Manifold.Tiled
 {
     /// <summary>
     /// A property which can take the forma of varies types of variables. 
@@ -94,6 +96,42 @@
         /// Only the actually set members are saved. When no members have been set the properties
         /// element is left out entirely.
         /// </remarks>
-        public Properties Properties => Properties.FromXML(Value);
+        public Properties? Properties { get; set; } = null;
+
+        public bool HasProperties => Properties != null;
+
+
+
+        public static Property FromXmlNode(XmlDocument document, string xpath, XmlNode? propertyNode)
+        {
+            string tag = "property";
+            if (propertyNode is null)
+                throw new XmlNodeParseException("Node is null.");
+            if (propertyNode.Name != tag)
+                throw new XmlNodeParseException($"Node named '{propertyNode.Name}' is not of type '{tag}'.");
+            if (propertyNode.Attributes is null)
+                throw new XmlNodeParseException("Node.Attributes is null.");
+
+            // Create new from XML
+            var property = new Property();
+            //
+            property.Name = propertyNode.Attributes["name"].ErrorOrValue();
+            property.Type = propertyNode.Attributes["type"].ErrorOrParseValue((string str) => Enum.Parse<PropertyType>(str, true));
+            property.PropertyType = propertyNode.Attributes["propertytype"]?.Value;
+            property.Value = propertyNode.Attributes["propertytype"].ErrorOrValue();
+            //
+            var hasXml = !string.IsNullOrEmpty(propertyNode.InnerXml);
+            if (hasXml)
+            {
+                property.Properties = Properties.FromXml(propertyNode.InnerXml, "properties").GetOnlyValueOrNull();
+            }
+            return property;
+        }
+
+        public static Property[] FromXmlNodes(XmlDocument document, string xpath)
+            => TiledXmlExtensions.FromXmlNodes(document, xpath, FromXmlNode);
+
+        public static Property[] FromXml(string xml, string xpath)
+            => TiledXmlExtensions.FromXml(xml, xpath, FromXmlNode);
     }
 }

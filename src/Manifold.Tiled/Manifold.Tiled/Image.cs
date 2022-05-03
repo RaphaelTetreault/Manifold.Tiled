@@ -106,8 +106,11 @@ namespace Manifold.Tiled
             image.Width = imageNode.Attributes["width"].NullOrParseValue(int.Parse);
             image.Height = imageNode.Attributes["height"].NullOrParseValue(int.Parse);
             // Child nodes
-            if (!string.IsNullOrEmpty(imageNode.InnerXml))
+            var hasXml = !string.IsNullOrEmpty(imageNode.InnerXml);
+            if (hasXml)
+            {
                 image.Data = Data.FromXml(imageNode.InnerXml, "data").GetOnlyValueOrNull();
+            }
 
             return image;
         }

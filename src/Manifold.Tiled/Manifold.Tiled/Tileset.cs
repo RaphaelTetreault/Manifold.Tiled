@@ -167,18 +167,25 @@ namespace Manifold.Tiled
             tileset.ObjectAlignment = tilesetNode.Attributes["objectalignment"].DefaultOrParseValue(
                 (string str) => Enum.Parse<ObjectAlignment>(str, true), ObjectAlignment.Unspecified);
             // Child nodes
-            tileset.Image = Image.FromXml(tilesetNode.InnerXml, "image").GetOnlyValueOrNull();
-            //tileset.TileOffset =;
-            //tileset.Grid =;
-            //tileset.Properties =;
-            //tileset.Wangsets =;
-            //tileset.Tiles =;
+            var hasXml = !string.IsNullOrEmpty(tilesetNode.InnerXml);
+            if (hasXml)
+            {
+                tileset.Image = Image.FromXml(tilesetNode.InnerXml, "image").GetOnlyValueOrNull();
+                tileset.TileOffset = TileOffset.FromXml(tilesetNode.InnerText, "tileoffset").GetOnlyValueOrNull();
+                tileset.Grid = Grid.FromXml(tilesetNode.InnerText, "grid").GetOnlyValueOrNull();
+                tileset.Properties = Properties.FromXml(tilesetNode.InnerText, "properties").GetOnlyValueOrNull();
+                tileset.Wangsets = Wangsets.FromXml(tilesetNode.InnerText, "wangsets").GetOnlyValueOrNull();
+                tileset.Tiles = Tile.FromXml(tilesetNode.InnerXml, "tile");
+            }
 
             return tileset;
         }
 
         public static Tileset[] FromXmlNodes(XmlDocument document, string xpath)
             => TiledXmlExtensions.FromXmlNodes(document, xpath, FromXmlNode);
+
+        public static Tileset[] FromXml(string xml, string xpath)
+            => TiledXmlExtensions.FromXml(xml, xpath, FromXmlNode);
 
     }
 }

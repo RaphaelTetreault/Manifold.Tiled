@@ -1,4 +1,6 @@
-﻿namespace Manifold.Tiled
+﻿using System.Xml;
+
+namespace Manifold.Tiled
 {
     /// <summary>
     /// Representes a non-grid-based element.
@@ -101,7 +103,7 @@
         /// <remarks>
         /// Optional.
         /// </remarks>
-        public string? Template { get; set; } = null;
+        public Template? Template { get; set; } = null;
 
 
 
@@ -147,6 +149,12 @@
         }
 
         /// <summary>
+        /// Whether or not this object has a template.
+        /// </summary>
+        public bool HasTemplate => Template != null;
+
+
+        /// <summary>
         /// Whether or not this object has a property.
         /// </summary>
         public bool HasProperties => Properties != null;
@@ -175,5 +183,50 @@
         /// Whether or not this object has a text.
         /// </summary>
         public bool HasText => Text != null;
+
+
+        public static Object FromXmlNode(XmlDocument document, string xpath, XmlNode? objectGroupNode)
+        {
+            string tag = "object";
+            if (objectGroupNode is null)
+                throw new XmlNodeParseException("Node is null.");
+            if (objectGroupNode.Name != tag)
+                throw new XmlNodeParseException($"Node named '{objectGroupNode.Name}' is not of type '{tag}'.");
+            if (objectGroupNode.Attributes is null)
+                throw new XmlNodeParseException("Node.Attributes is null.");
+
+            // Create new from XML
+            var @object = new Object();
+            // Values
+            @object.ID = objectGroupNode.Attributes["id"].ErrorOrParseValue(uint.Parse);
+            @object.Name = objectGroupNode.Attributes["name"].ErrorOrValue();
+            @object.Type = objectGroupNode.Attributes["type"].ErrorOrValue();
+            @object.X = objectGroupNode.Attributes["x"].ErrorOrParseValue(int.Parse);
+            @object.Y = objectGroupNode.Attributes["y"].ErrorOrParseValue(int.Parse);
+            @object.Width = objectGroupNode.Attributes["width"].ErrorOrParseValue(int.Parse);
+            @object.Height = objectGroupNode.Attributes["height"].ErrorOrParseValue(int.Parse);
+            @object.Rotation = objectGroupNode.Attributes["rotation"].ErrorOrParseValue(float.Parse);
+            @object.GID = objectGroupNode.Attributes["gid"].ErrorOrParseValue(uint.Parse);
+            @object.Visible = objectGroupNode.Attributes["visible"].ErrorOrParseValue(int.Parse);
+            // Children
+            var hasXml = !string.IsNullOrEmpty(objectGroupNode.InnerXml);
+            if (hasXml)
+            {
+                @object.Properties = Properties.FromXml(objectGroupNode.InnerXml, "properties").GetOnlyValueOrNull();
+                @object.Ellipse = Ellipse.FromXml(objectGroupNode.InnerXml, "ellipse");
+                @object.Point = Point.FromXml(objectGroupNode.InnerXml, "point");
+                @object.Polygon = Polygon.FromXml(objectGroupNode.InnerXml, "polygon");
+                @object.Polyline = Polyline.FromXml(objectGroupNode.InnerXml, "polyline");
+                @object.Text = Text.FromXml(objectGroupNode.InnerXml, "text");
+            }
+
+            return @object;
+        }
+
+        public static Object[] FromXmlNodes(XmlDocument document, string xpath)
+            => TiledXmlExtensions.FromXmlNodes(document, xpath, FromXmlNode);
+
+        public static Object[] FromXml(string xml, string xpath)
+            => TiledXmlExtensions.FromXml(xml, xpath, FromXmlNode);
     }
 }

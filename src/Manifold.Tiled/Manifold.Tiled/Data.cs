@@ -80,8 +80,13 @@ namespace Manifold.Tiled
             data.Encoding = dataNode.Attributes["encoding"].DefaultOrParseValue((string str) => Enum.Parse<Encoding>(str, true), Encoding.None);
             data.Compression = dataNode.Attributes["compression"].DefaultOrParseValue((string str) => Enum.Parse<Compression>(str, true), Compression.None);
             data.Value = dataNode.Value is null ? "" : data.Value;
-            //
-            //data.Tiles = Tile.FromXmlNodes(document, $"{xpath}");
+            // Children
+            var hasXml = !string.IsNullOrEmpty(dataNode.InnerXml);
+            if (hasXml)
+            {
+                data.Tiles = Tile.FromXml(dataNode.InnerXml, "tile");
+                data.Chunks = Chunk.FromXml(dataNode.InnerXml, "chunk");
+            }
 
             return data;
         }

@@ -1,4 +1,6 @@
-﻿namespace Manifold.Tiled
+﻿using System.Xml;
+
+namespace Manifold.Tiled
 {
     /// <summary>
     /// A map group composed of objects.
@@ -118,5 +120,48 @@
         /// Whether or not this object group has objects.
         /// </summary>
         public bool HasObjects => Objects != null && Objects.Length > 0;
+
+
+
+        public static ObjectGroup FromXmlNode(XmlDocument document, string xpath, XmlNode? objectGroupNode)
+        {
+            string tag = "objectgroup";
+            if (objectGroupNode is null)
+                throw new XmlNodeParseException("Node is null.");
+            if (objectGroupNode.Name != tag)
+                throw new XmlNodeParseException($"Node named '{objectGroupNode.Name}' is not of type '{tag}'.");
+            if (objectGroupNode.Attributes is null)
+                throw new XmlNodeParseException("Node.Attributes is null.");
+
+            // Create new from XML
+            var objectGroup = new ObjectGroup();
+            // Values
+            objectGroup.ID = objectGroupNode.Attributes["id"].ErrorOrParseValue(uint.Parse);
+            objectGroup.Name = objectGroupNode.Attributes["name"].ErrorOrValue();
+            objectGroup.X = objectGroupNode.Attributes["x"].ErrorOrParseValue(int.Parse);
+            objectGroup.Y = objectGroupNode.Attributes["y"].ErrorOrParseValue(int.Parse);
+            objectGroup.Width = objectGroupNode.Attributes["width"].ErrorOrParseValue(int.Parse);
+            objectGroup.Height = objectGroupNode.Attributes["height"].ErrorOrParseValue(int.Parse);
+            objectGroup.Opacity = objectGroupNode.Attributes["opacity"].ErrorOrParseValue(float.Parse);
+            objectGroup.TintColor = objectGroupNode.Attributes["tintcolor"].ErrorOrParseValue(Color.FromHexARGB);
+            objectGroup.OffsetX = objectGroupNode.Attributes["offsetx"].ErrorOrParseValue(int.Parse);
+            objectGroup.OffsetY = objectGroupNode.Attributes["offsety"].ErrorOrParseValue(int.Parse);
+            objectGroup.DrawOrder = objectGroupNode.Attributes["draworder"].ErrorOrParseValue((string str) => Enum.Parse<DrawOrder>(str, true));
+            // Children
+            var hasXml = !string.IsNullOrEmpty(objectGroupNode.InnerXml);
+            if (hasXml)
+            {
+                objectGroup.Properties = Properties.FromXml(objectGroupNode.InnerXml, "properties").GetOnlyValueOrNull();
+                objectGroup.Objects = Object.FromXml(objectGroupNode.InnerXml, "object");
+            }
+
+            return objectGroup;
+        }
+
+        public static ObjectGroup[] FromXmlNodes(XmlDocument document, string xpath)
+            => TiledXmlExtensions.FromXmlNodes(document, xpath, FromXmlNode);
+
+        public static ObjectGroup[] FromXml(string xml, string xpath)
+            => TiledXmlExtensions.FromXml(xml, xpath, FromXmlNode);
     }
 }
