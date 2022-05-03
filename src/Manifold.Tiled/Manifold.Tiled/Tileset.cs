@@ -75,20 +75,64 @@
 
 
 
-
+        /// <summary>
+        /// Image associated with this tileset.
+        /// </summary>
         public Image? Image { get; set; } = null;
+
+        /// <summary>
+        /// Tile offset for this tileset.
+        /// </summary>
         public TileOffset? TileOffset { get; set; } = null;
+        
+        /// <summary>
+        /// Grid associated with this tileset.
+        /// </summary>
         public Grid? Grid { get; set; } = null;
+        
+        /// <summary>
+        /// Properties associated with this tileset.
+        /// </summary>
         public Properties? Properties { get; set; } = null;
-        public Wangsets? Wangsets { get; set; } = null;
-        public Tile[]? Tiles { get; set; } = null;
+        
+        /// <summary>
+        /// Wangsets associated with this tileset.
+        /// </summary>
+        public WangSets? Wangsets { get; set; } = null;
+        
+        /// <summary>
+        /// Tiles for this tileset.
+        /// </summary>
+        public Tile[] Tiles { get; set; } = new Tile[0];
 
-
+        /// <summary>
+        /// Whether or not this tileset has an image.
+        /// </summary>
         public bool HasImage => Image != null;
+
+        /// <summary>
+        /// Whether or not this tileset has a tile offset.
+        /// </summary>
         public bool HasTileOffset => TileOffset != null;
+
+        /// <summary>
+        /// Whether or not this tileset has a grid.
+        /// </summary>
         public bool HasGrid => Grid != null;
+
+        /// <summary>
+        /// Whether or not this tileset has properties.
+        /// </summary>
         public bool HasProperties => Properties != null;
+
+        /// <summary>
+        /// Whether or not this tileset has wangsets.
+        /// </summary>
         public bool HasWangsets => Wangsets != null;
+
+        /// <summary>
+        /// Whether or not this tileset has tiles.
+        /// </summary>
         public bool HasTiles => Tiles != null && Tiles.Length > 0;
     }
 }

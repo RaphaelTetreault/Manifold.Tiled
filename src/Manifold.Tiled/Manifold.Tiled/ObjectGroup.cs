@@ -111,7 +111,7 @@
         /// <summary>
         /// Whether or not this object group has properties.
         /// </summary>
-        public bool HasProperty => Properties != null;
+        public bool HasProperties => Properties != null;
 
         /// <summary>
         /// Whether or not this object group has objects.

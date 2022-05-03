@@ -65,13 +65,24 @@
 
 
         /// <summary>
-        /// 
+        /// Properties associated with this image layer.
         /// </summary>
         public Properties? Properties { get; set; } = null;
 
         /// <summary>
-        /// 
+        /// The image for this layer.
         /// </summary>
         public Image? Image { get; set; } = null;
+
+        /// <summary>
+        /// Whether or not this image layer has properties.
+        /// </summary>
+        public bool HasProperties => Properties != null;
+
+        /// <summary>
+        /// Whether or not this image layer has an image.
+        /// </summary>
+        public bool HasImage => Image != null;
+
     }
 }

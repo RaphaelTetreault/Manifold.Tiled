@@ -29,21 +29,34 @@
         /// </summary>
         /// <remarks>
         /// When no encoding or compression is given, the tiles are stored as individual XML tile elements.
-        /// As such, this value is null otherwise.
+        /// As such, this value is empty otherwise.
         /// </remarks>
-        public Tile[]? Tiles { get; set; } = null;
+        public Tile[] Tiles { get; set; } = new Tile[0];
 
         /// <summary>
         /// Rectangle regions of a map used when the map is set to 'infinite'.
         /// </summary>
-        public Chunk[]? Chunks { get; set; } = null;
+        public Chunk[] Chunks { get; set; } = new Chunk[0];
 
 
         /// <summary>
-        /// Whether this Data instance has Tiles or not.
+        /// Whether this Data instance has inidividual XML tags for tiles or not.
         /// </summary>
-        public bool HasTiles =>
+        /// <remarks>
+        /// When no encoding or compression is given, the tiles are stored as individual XML tile elements.
+        /// </remarks>
+        public bool ShouldHaveTiles =>
             Encoding == Encoding.None &&
             Compression == Compression.None;
+
+        /// <summary>
+        /// Whether this Data instance has tiles or not.
+        /// </summary>
+        public bool HasTiles => Tiles != null && Tiles.Length > 0;
+
+        /// <summary>
+        /// Whether this Data instance has chunks or not.
+        /// </summary>
+        public bool HasChunks => Chunks != null && Chunks.Length > 0;
     }
 }

@@ -35,12 +35,12 @@
 
 
         /// <summary>
-        /// 
+        /// Properties associated with this wang color.
         /// </summary>
         public Properties? Properties { get; set; } = null;
 
         /// <summary>
-        /// 
+        /// Whether or not this tileset has properties.
         /// </summary>
         public bool HasProperties => Properties != null;
     }

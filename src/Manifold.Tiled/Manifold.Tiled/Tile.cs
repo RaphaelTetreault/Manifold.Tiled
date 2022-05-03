@@ -1,10 +1,10 @@
 ﻿namespace Manifold.Tiled
 {
     /// <summary>
-    /// 
+    /// A tile as part of tileset or map's data.
     /// </summary>
     /// <remarks>
-    /// See <see href=""/>
+    /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#tile"/>
     /// for more information.
     /// </remarks>
     public class Tile
@@ -32,15 +32,44 @@
         public float Probability { get; set; } = 0;
 
 
-
+        /// <summary>
+        /// Properties associated with this tile.
+        /// </summary>
         public Properties? Properties { get; set; } = null;
+
+        /// <summary>
+        /// Image associated with this tile.
+        /// </summary>
         public Image? Image { get; set; } = null;
+
+        /// <summary>
+        /// Object group associated with this tile.
+        /// </summary>
         public ObjectGroup? ObjectGroup { get; set; } = null;
+
+        /// <summary>
+        /// Animation associated with this tile.
+        /// </summary>
         public Animation? Animation { get; set; } = null;
 
+        /// <summary>
+        /// Whether or not this tile has properties.
+        /// </summary>
         public bool HasProperties => Properties != null;
+
+        /// <summary>
+        /// Whether or not this tile has an image.
+        /// </summary>
         public bool HasImage => Image != null;
+
+        /// <summary>
+        /// Whether or not this tile has an object group.
+        /// </summary>
         public bool HasObjectGroup => ObjectGroup != null;
+
+        /// <summary>
+        /// Whether or not this tile has an animation.
+        /// </summary>
         public bool HasAnimation => Animation != null;
     }
 }

@@ -107,9 +107,9 @@
 
 
         /// <summary>
-        /// A property element tied to this object.
+        /// Properties associated with this object.
         /// </summary>
-        public Property? Property { get; set; } = null;
+        public Properties? Properties { get; set; } = null;
 
         /// <summary>
         /// A ellipse element tied to this object.
@@ -140,7 +140,7 @@
         /// <summary>
         /// Whether or not this object has a property.
         /// </summary>
-        public bool HasProperty => Property != null;
+        public bool HasProperties => Properties != null;
 
         /// <summary>
         /// Whether or not this object has a ellipse.

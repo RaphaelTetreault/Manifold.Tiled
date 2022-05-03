@@ -34,8 +34,13 @@
         public int Height { get; set; }
 
         /// <summary>
-        /// 
+        /// Tiles from this chunk.
         /// </summary>
-        public LayerTile[]? Tiles { get; set; } = null;
+        public LayerTile[] Tiles { get; set; } = new LayerTile[0];
+
+        /// <summary>
+        /// Whether or not this chunk has tiles.
+        /// </summary>
+        public bool HasTiles => Tiles != null && Tiles.Length > 0;
     }
 }

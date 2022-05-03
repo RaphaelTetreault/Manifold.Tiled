@@ -20,7 +20,6 @@
         /// </summary>
         /// <remarks>
         /// Optional.
-        /// Available since Tiled 1.0.1.
         /// May be a date (for snapshot builds).
         /// </remarks>
         public string? TiledVersion { get; set; } = null;
@@ -28,9 +27,6 @@
         /// <summary>
         /// Map orientation. Tiled supports “orthogonal”, “isometric”, “staggered” and “hexagonal”.
         /// </summary>
-        /// <remarks>
-        /// Available since Tiled 0.11)
-        /// </remarks>
         public Orientation Orientation { get; set; }
 
         /// <summary>
@@ -89,7 +85,6 @@
         /// </summary>
         /// <remarks>
         /// Defaults to 0.
-        /// Available since Tiled 1.8.
         /// </remarks>
         public int ParallaxOriginX { get; set; } = 0;
 
@@ -98,7 +93,6 @@
         /// </summary>
         /// <remarks>
         /// Defaults to 0.
-        /// Available since Tiled 1.8.
         /// </remarks>
         public int ParallaxOriginY { get; set; } = 0;
 
@@ -107,7 +101,6 @@
         /// </summary>
         /// <remarks>
         /// Optional.
-        /// May include alpha value since 0.15.
         /// Defaults to fully transparent black.
         /// </remarks>
         public Color TiledColor { get; set; } = new Color(0, 0, 0, 255);
@@ -118,7 +111,6 @@
         /// (since 1.2) (defaults to the highest layer id in the file + 1)
         /// </summary>
         /// <remarks>
-        /// Available since Tiled 1.2.
         /// Defaults to the highest layer id in the file + 1.
         /// </remarks>
         public int NextLayerID { get; set; }
@@ -128,7 +120,6 @@
         /// This number is stored to prevent reuse of the same ID after objects have been removed.
         /// </summary>
         /// <remarks>
-        /// Available since Tiled 0.11.
         /// Defaults to the highest object id in the file + 1.
         /// </remarks>
         public int NextObjectID { get; set; }
@@ -144,7 +135,7 @@
 
         // HELPER PROPERTIES
         /// <summary>
-        /// 
+        /// Whether this map is infinite.
         /// </summary>
         public bool IsInfinite
         {

@@ -53,5 +53,30 @@
         /// Optional.
         /// </remarks>
         public int? Height { get; set; } = null;
+
+        /// <summary>
+        /// Wrapper for Trans property.
+        /// Defines a specific color that is treated as transparent (example value: “#FF00FF” for magenta).
+        /// </summary>
+        public Color? TransparentColor
+        {
+            get => Trans;
+            set => Trans = value;
+        }
+
+        /// <summary>
+        /// Whether or not this group has a tint color.
+        /// </summary>
+        public bool HasTransparentColor => Trans != null;
+
+        /// <summary>
+        /// Whether or not this image has a width value.
+        /// </summary>
+        public bool HasWidth => Width != null;
+
+        /// <summary>
+        /// Whether or not this image has a height value.
+        /// </summary>
+        public bool HasHeight => Height != null;
     }
 }

@@ -63,17 +63,7 @@ namespace Manifold.Tiled
             }
         }
 
-        public uint RawARGB
-        {
-            get
-            {
-                return (uint)(
-                    (a << 24) +
-                    (r << 16) +
-                    (g << 08) +
-                    (b << 00));
-            }
-        }
+        public uint RawARGB => rawARGB;
 
         public override string ToString()
         {
