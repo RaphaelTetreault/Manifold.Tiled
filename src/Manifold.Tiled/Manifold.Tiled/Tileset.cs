@@ -142,7 +142,7 @@ namespace Manifold.Tiled
         public int Rows => TileCount / Columns;
 
 
-        public static Tileset FromXmlNode(XmlDocument xml, string xpath, XmlNode? tilesetNode)
+        public static Tileset FromXmlNode(XmlNode? tilesetNode)
         {
             string tag = "tileset";
             if (tilesetNode is null)

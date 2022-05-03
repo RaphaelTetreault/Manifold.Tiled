@@ -123,7 +123,7 @@ namespace Manifold.Tiled
 
 
 
-        public static ObjectGroup FromXmlNode(XmlDocument document, string xpath, XmlNode? objectGroupNode)
+        public static ObjectGroup FromXmlNode(XmlNode? objectGroupNode)
         {
             string tag = "objectgroup";
             if (objectGroupNode is null)

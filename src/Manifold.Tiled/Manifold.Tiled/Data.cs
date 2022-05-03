@@ -64,7 +64,7 @@ namespace Manifold.Tiled
 
 
 
-        public static Data FromXmlNode(XmlDocument document, string xpath, XmlNode? dataNode)
+        public static Data FromXmlNode(XmlNode? dataNode)
         {
             string tag = "data";
             if (dataNode is null)

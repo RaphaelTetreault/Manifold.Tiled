@@ -58,7 +58,7 @@ namespace Manifold.Tiled
 
 
 
-        public delegate T FromXmlNodeFunc<T>(XmlDocument xml, string xpath, XmlNode? node);
+        public delegate T FromXmlNodeFunc<T>(XmlNode? node);
 
         public static T[] FromXmlNodes<T>(XmlDocument xml, string xpath, FromXmlNodeFunc<T> function)
         {
@@ -67,7 +67,7 @@ namespace Manifold.Tiled
             for (int i = 0; i < values.Length; i++)
             {
                 var tilesetNode = nodes[i];
-                values[i] = function(xml, xpath, tilesetNode);
+                values[i] = function(tilesetNode);
             }
             return values;
         }

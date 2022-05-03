@@ -102,7 +102,7 @@ namespace Manifold.Tiled
 
 
 
-        public static Property FromXmlNode(XmlDocument document, string xpath, XmlNode? propertyNode)
+        public static Property FromXmlNode(XmlNode? propertyNode)
         {
             string tag = "property";
             if (propertyNode is null)

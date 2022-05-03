@@ -1,4 +1,6 @@
-﻿namespace Manifold.Tiled
+﻿using System.Xml;
+
+namespace Manifold.Tiled
 {
     /// <summary>
     /// Contains a list of animation frames.
@@ -21,5 +23,29 @@
         /// The `Frames` array should always be initialized with size 0.
         /// </remarks>
         public bool HasFrames => Frames != null && Frames.Length > 0;
+
+
+        public static Animation FromXmlNode(XmlNode? animationNode)
+        {
+            string tag = "animation";
+            if (animationNode is null)
+                throw new XmlNodeParseException("Node is null.");
+            if (animationNode.Name != tag)
+                throw new XmlNodeParseException($"Node named '{animationNode.Name}' is not of type '{tag}'.");
+            if (animationNode.Attributes is null)
+                throw new XmlNodeParseException("Node.Attributes is null.");
+
+            // Create new from XML
+            var animation = new Animation();
+            animation.Frames = AnimationFrame.FromXml(animationNode.InnerXml, "frame");
+
+            return animation;
+        }
+
+        public static Animation[] FromXmlNodes(XmlDocument document, string xpath)
+            => TiledXmlExtensions.FromXmlNodes(document, xpath, FromXmlNode);
+
+        public static Animation[] FromXml(string xml, string xpath)
+            => TiledXmlExtensions.FromXml(xml, xpath, FromXmlNode);
     }
 }

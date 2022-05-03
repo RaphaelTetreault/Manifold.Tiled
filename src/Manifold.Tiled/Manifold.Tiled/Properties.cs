@@ -28,7 +28,7 @@ namespace Manifold.Tiled
         public bool HasValues => Values != null && Values.Length > 0;
 
 
-        public static Properties FromXmlNode(XmlDocument document, string xpath, XmlNode? propertiesNode)
+        public static Properties FromXmlNode(XmlNode? propertiesNode)
         {
             string tag = "properties";
             if (propertiesNode is null)

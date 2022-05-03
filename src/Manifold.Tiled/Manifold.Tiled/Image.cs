@@ -87,7 +87,7 @@ namespace Manifold.Tiled
 
 
 
-        public static Image FromXmlNode(XmlDocument document, string xpath, XmlNode? imageNode)
+        public static Image FromXmlNode(XmlNode? imageNode)
         {
             string tag = "image";
             if (imageNode is null)

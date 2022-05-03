@@ -75,7 +75,7 @@ namespace Manifold.Tiled
         public bool HasAnimation => Animation != null;
 
 
-        public static Tile FromXmlNode(XmlDocument document, string xpath, XmlNode? tileNode)
+        public static Tile FromXmlNode(XmlNode? tileNode)
         {
             string tag = "tile";
             if (tileNode is null)

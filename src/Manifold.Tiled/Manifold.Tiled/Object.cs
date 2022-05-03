@@ -185,7 +185,7 @@ namespace Manifold.Tiled
         public bool HasText => Text != null;
 
 
-        public static Object FromXmlNode(XmlDocument document, string xpath, XmlNode? objectGroupNode)
+        public static Object FromXmlNode(XmlNode? objectGroupNode)
         {
             string tag = "object";
             if (objectGroupNode is null)
