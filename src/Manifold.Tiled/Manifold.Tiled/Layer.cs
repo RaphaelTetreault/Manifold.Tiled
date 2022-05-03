@@ -7,7 +7,8 @@
     /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#layer"/>
     /// for more information.
     /// </remarks>
-    public class Layer
+    public class Layer : 
+        IUniquelyIdentifiable
     {
         /// <summary>
         /// Unique ID of the layer.
@@ -120,11 +121,6 @@
         /// </summary>
         public Data? Data { get; set; }
 
-
-        /// <summary>
-        /// Whether or not the ID is valid (non-zero).
-        /// </summary>
-        public bool IsValidID => ID != 0;
 
         /// <summary>
         /// Whether the layer is shown or hidden.

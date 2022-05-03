@@ -8,7 +8,7 @@
     /// for more information.
     /// </remarks>
     public class ImageLayer :
-        IIdentifyable,
+        IUniquelyIdentifiable,
         INamed
     {
         /// <summary>

@@ -9,7 +9,7 @@
     /// for more information.
     /// </remarks>
     public class Group :
-        IIdentifyable,
+        IUniquelyIdentifiable,
         INamed
     {
         /// <summary>

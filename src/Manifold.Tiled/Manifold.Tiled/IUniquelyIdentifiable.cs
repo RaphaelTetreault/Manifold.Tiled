@@ -3,7 +3,7 @@
     /// <summary>
     /// Defines an element with unique ID.
     /// </summary>
-    public interface IIdentifyable
+    public interface IUniquelyIdentifiable
     {
         /// <summary>
         /// Unique ID.

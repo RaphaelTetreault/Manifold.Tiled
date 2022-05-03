@@ -10,7 +10,7 @@
     /// </remarks>
     public class Object :
         IBounded,
-        IIdentifyable,
+        IUniquelyIdentifiable,
         INamed
     {
         /// <summary>
