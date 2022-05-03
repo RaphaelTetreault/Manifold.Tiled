@@ -3,7 +3,7 @@
     /// <summary>
     /// The type of the property for `property`.
     /// </summary>
-    public enum PropertyType
+    public enum PropertyType : byte
     {
         Default,
         Integer,

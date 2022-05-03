@@ -3,7 +3,7 @@
     /// <summary>
     /// The encoding used to encode the tile layer data.
     /// </summary>
-    public enum Encoding
+    public enum Encoding : byte
     {
         None,
         CSV,

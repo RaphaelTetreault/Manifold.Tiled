@@ -4,7 +4,7 @@
     /// Whether objects are drawn according to order of appearance (“index”)
     /// or sorted by their y-coordinate (“topdown”).
     /// </summary>
-    public enum DrawOrder
+    public enum DrawOrder : byte
     {
         /// <summary>
         /// Objects are sorted by their y-coordinate.
