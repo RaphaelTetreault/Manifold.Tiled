@@ -17,6 +17,9 @@
         /// <summary>
         /// Whether or not there are wang set values.
         /// </summary>
+        /// <remarks>
+        /// The `Values` array should always be initialized with size 0.
+        /// </remarks>
         public bool HasValues => Values != null && Values.Length > 0;
     }
 }
