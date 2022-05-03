@@ -7,8 +7,7 @@
     /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#layer"/>
     /// for more information.
     /// </remarks>
-    public class Layer :
-        ILayer
+    public class Layer
     {
         /// <summary>
         /// Unique ID of the layer.

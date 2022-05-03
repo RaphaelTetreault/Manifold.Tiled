@@ -7,8 +7,7 @@
     /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#objectgroup"/>
     /// for more information.
     /// </remarks>
-    public class ObjectGroup :
-        ILayer
+    public class ObjectGroup
     {
         /// <summary>
         /// Unique ID of the layer.
