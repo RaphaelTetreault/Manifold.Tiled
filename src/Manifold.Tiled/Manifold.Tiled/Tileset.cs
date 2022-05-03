@@ -1,4 +1,6 @@
-﻿namespace Manifold.Tiled
+﻿using System.Xml;
+
+namespace Manifold.Tiled
 {
     /// <summary>
     /// A tileset can be either based on a single image, which is cut into tiles based on the given
@@ -27,7 +29,7 @@
         /// attribute missing and this source attribute is also not there. These two attributes are kept in the
         /// TMX map, since they are map specific.)
         /// </remarks>
-        public string Source { get; set; } = string.Empty;
+        public string? Source { get; set; } = null;
 
         /// <summary>
         ///  The name of this tileset.
@@ -47,12 +49,12 @@
         /// <summary>
         /// The spacing in pixels between the tiles in this tileset (applies to the tileset image, defaults to 0). Irrelevant for image collection tilesets.
         /// </summary>
-        public int Spacing { get; set; }
+        public int? Spacing { get; set; } = null;
 
         /// <summary>
         /// The margin around the tiles in this tileset (applies to the tileset image, defaults to 0). Irrelevant for image collection tilesets.
         /// </summary>
-        public int Margin { get; set; }
+        public int? Margin { get; set; } = null;
 
         /// <summary>
         /// The number of tiles in this tileset (since 0.13). Note that there can be tiles with a higher ID than the tile count, in case the tileset is an image collection from which tiles have been removed.
@@ -72,7 +74,7 @@
         /// When unspecified, tile objects use bottomleft in orthogonal mode and bottom in isometric mode.
         /// Available since Tiled 1.4.
         /// </remarks>
-        public ObjectAlignment Alignment { get; set; } = ObjectAlignment.Unspecified;
+        public ObjectAlignment ObjectAlignment { get; set; } = ObjectAlignment.Unspecified;
 
 
 
@@ -135,5 +137,57 @@
         /// Whether or not this tileset has tiles.
         /// </summary>
         public bool HasTiles => Tiles != null && Tiles.Length > 0;
+
+
+        public int Rows => TileCount / Columns;
+
+
+        public static Tileset[] FromXml(XmlDocument document, string xpath)
+        {
+            var tilesetNodes = document.SelectNodes(xpath);
+            var tilesets = new Tileset[tilesetNodes.Count];
+            for (int i = 0; i < tilesets.Length; i++)
+            {
+                var tilesetNode = tilesetNodes[i];
+                tilesets[i] = FromXmlNode(tilesetNode);
+            }
+            return tilesets;
+        }
+
+        public static Tileset FromXmlNode(XmlNode? tilesetNode)
+        {
+            //
+            if (tilesetNode.Name is not "tileset")
+                throw new XmlNodeParseException("Node is not of type 'tileset'.");
+            if (tilesetNode is null)
+                throw new XmlNodeParseException("Node is null.");
+            if (tilesetNode.Attributes is null)
+                throw new XmlNodeParseException("Node.Attributes is null.");
+
+            //
+            var tileset = new Tileset();
+            // Values
+            tileset.FirstGID = tilesetNode.Attributes["firstgid"].ParseValueOrError(int.Parse);
+            tileset.Source = tilesetNode.Attributes["source"]?.Value;
+            tileset.Name = tilesetNode.Attributes["name"].ValueOrError();
+            tileset.TileWidth = tilesetNode.Attributes["tilewidth"].ParseValueOrError(int.Parse);
+            tileset.TileHeight = tilesetNode.Attributes["tileheight"].ParseValueOrError(int.Parse);
+            tileset.Spacing = tilesetNode.Attributes["spacing"].ParseValueOrNull(int.Parse);
+            tileset.Margin = tilesetNode.Attributes["margin"].ParseValueOrNull(int.Parse);
+            tileset.TileCount = tilesetNode.Attributes["tilecount"].ParseValueOrError(int.Parse);
+            tileset.Columns = tilesetNode.Attributes["columns"].ParseValueOrError(int.Parse);
+            tileset.ObjectAlignment = tilesetNode.Attributes["objectalignment"].ParseValueOrDefault(
+                (string str) => Enum.Parse<ObjectAlignment>(str, true), ObjectAlignment.Unspecified);
+            // Child nodes
+            //tileset.Image =;
+            //tileset.TileOffset =;
+            //tileset.Grid =;
+            //tileset.Properties =;
+            //tileset.Wangsets =;
+            //tileset.Tiles =;
+
+            return tileset;
+        }
+
     }
 }

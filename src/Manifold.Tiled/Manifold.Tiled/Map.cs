@@ -1,4 +1,6 @@
-﻿namespace Manifold.Tiled
+﻿using System.Xml;
+
+namespace Manifold.Tiled
 {
     /// <summary>
     /// A Tiled map.
@@ -7,7 +9,7 @@
     /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#map"/>
     /// for more inormation.
     /// </remarks>
-    public class Map : 
+    public class Map :
         IGrid
     {
         /// <summary>
@@ -40,7 +42,7 @@
         /// <remarks>
         /// Defaults to -1, which means to use the algorithm default.
         /// </remarks>
-        public int CompressionLevel { get; set; } = -1;
+        public int? CompressionLevel { get; set; } = -1;
 
         /// <summary>
         /// The map width in tiles.
@@ -73,12 +75,12 @@
         /// <summary>
         /// For staggered and hexagonal maps, determines which axis is staggered.
         /// </summary>
-        public StaggerAxis StaggerAxis { get; set; }
+        public StaggerAxis? StaggerAxis { get; set; }
 
         /// <summary>
         /// For staggered and hexagonal maps, determines whether the “even” or “odd” indexes along the staggered axis are shifted. (since 0.11)
         /// </summary>
-        public StaggerIndex StaggerIndex { get; set; }
+        public StaggerIndex? StaggerIndex { get; set; }
 
         /// <summary>
         /// X coordinate of the parallax origin in pixels.
@@ -86,7 +88,7 @@
         /// <remarks>
         /// Defaults to 0.
         /// </remarks>
-        public int ParallaxOriginX { get; set; } = 0;
+        public int? ParallaxOriginX { get; set; } = 0;
 
         /// <summary>
         /// Y coordinate of the parallax origin in pixels.
@@ -94,7 +96,7 @@
         /// <remarks>
         /// Defaults to 0.
         /// </remarks>
-        public int ParallaxOriginY { get; set; } = 0;
+        public int? ParallaxOriginY { get; set; } = 0;
 
         /// <summary>
         /// The background color of the map.
@@ -103,7 +105,7 @@
         /// Optional.
         /// Defaults to fully transparent black.
         /// </remarks>
-        public Color TiledColor { get; set; } = new Color(0, 0, 0, 255);
+        public Color? BackgroundColor { get; set; } = new Color(0, 0, 0, 255);
 
         /// <summary>
         /// Stores the next available ID for new layers.
@@ -133,6 +135,42 @@
         public IntBool Infinite { get; set; }
 
 
+        // TODO: implement
+        // EditorSettings;
+        //      > ChunkSize
+        //      > Export
+
+        /// <summary>
+        /// Properties associated with this map.
+        /// </summary>
+        public Properties? Properties { get; set; } = null;
+
+        /// <summary>
+        /// Tilesets associated with this map.
+        /// </summary>
+        public TiledCollection<Tileset> Tilesets { get; set; } = new TiledCollection<Tileset>();
+
+        /// <summary>
+        /// All map layers.
+        /// </summary>
+        public TiledCollection<Layer> Layers { get; set; } = new TiledCollection<Layer>();
+
+        /// <summary>
+        /// All map object groups
+        /// </summary>
+        public TiledCollection<ObjectGroup> ObjectGroups { get; set; } = new TiledCollection<ObjectGroup>();
+        
+        /// <summary>
+        /// All map image layers.
+        /// </summary>
+        public TiledCollection<ImageLayer> ImageLayers { get; set; } = new TiledCollection<ImageLayer>();
+        
+        /// <summary>
+        /// All map groups.
+        /// </summary>
+        public TiledCollection<Group> Groups { get; set; } = new TiledCollection<Group>();
+
+
         /// <summary>
         /// Whether or not this map is infinite.
         /// </summary>
@@ -140,6 +178,49 @@
         {
             get => Infinite;
             set => Infinite = value;
+        }
+
+
+
+        public static Map FromXML(XmlDocument xml)
+        {
+            var mapNode = xml.SelectSingleNode("map");
+
+            if (mapNode is null)
+                throw new TmxParseException();
+            if (mapNode.Attributes is null)
+                throw new TmxParseException();
+
+            // Set map
+            var map = new Map();
+            map.Version = mapNode.Attributes["version"].ValueOrError();
+            map.TiledVersion = mapNode.Attributes["tiledversion"]?.Value;
+            map.Orientation = mapNode.Attributes["orientation"].ParseValueOrError((string str) => Enum.Parse<Orientation>(str, true));
+            map.RenderOrder = mapNode.Attributes["renderorder"].ParseValueOrError((string str) => Enum.Parse<RenderOrder>(str.Replace('-', '_'), true));
+            map.CompressionLevel = mapNode.Attributes["compressionlevel"].ParseValueOrNull(int.Parse);
+            map.Width = mapNode.Attributes["width"].ParseValueOrError(int.Parse);
+            map.Height = mapNode.Attributes["height"].ParseValueOrError(int.Parse);
+            map.TileWidth = mapNode.Attributes["tilewidth"].ParseValueOrError(int.Parse);
+            map.TileHeight = mapNode.Attributes["tileheight"].ParseValueOrError(int.Parse);
+            map.HexSideLength = mapNode.Attributes["hexsidelength"].ParseValueOrNull(int.Parse);
+            map.StaggerAxis = mapNode.Attributes["staggeraxis"].ParseValueOrNull((string str) => Enum.Parse<StaggerAxis>(str, true));
+            map.StaggerIndex = mapNode.Attributes["staggerindex"].ParseValueOrNull((string str) => Enum.Parse<StaggerIndex>(str, true));
+            map.ParallaxOriginX = mapNode.Attributes["parallaxoriginx"].ParseValueOrNull(int.Parse);
+            map.ParallaxOriginY = mapNode.Attributes["parallaxoriginy"].ParseValueOrNull(int.Parse);
+            map.BackgroundColor = mapNode.Attributes["backgroundcolor"].ParseValueOrNull(Color.FromHexARGB);
+            map.NextLayerID = mapNode.Attributes["nextlayerid"].ParseValueOrError(int.Parse);
+            map.NextObjectID = mapNode.Attributes["nextobjectid"].ParseValueOrError(int.Parse);
+            map.Infinite = mapNode.Attributes["infinite"].ParseValueOrError(int.Parse);
+
+
+            var tilesets = Tileset.FromXml(xml, "map/tileset");
+            map.Tilesets.AddRange(tilesets);
+
+            // TODO:
+            // implement the child tag types
+            throw new NotImplementedException();
+
+            return map;
         }
     }
 }

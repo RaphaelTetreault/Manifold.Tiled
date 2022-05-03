@@ -99,9 +99,10 @@ namespace Manifold.Tiled
 
         private static Color FromHex(string hexString, bool isAlphaFirst)
         {
-            var cleanString = SanitizeHexString(hexString);
-            var componentSize = cleanString.Length > 4 ? 2 : 1;
-            var color = HexStringToColor(cleanString, componentSize, isAlphaFirst);
+            var cleanColor = SanitizeHexString(hexString);
+            var componentSize = cleanColor.Length > 4 ? 2 : 1;
+            var fullColor = AddAlpha(cleanColor, componentSize, isAlphaFirst);
+            var color = HexStringToColor(fullColor, componentSize, isAlphaFirst);
             return color;
         }
 
@@ -128,6 +129,22 @@ namespace Manifold.Tiled
             }
 
             return hexString;
+        }
+
+        private static string AddAlpha(string hexString, int componentSize, bool isAlphaFirst)
+        {
+            // Only add alpha if we are of size 3 or 6
+            if (hexString.Length == 4 ||
+                hexString.Length == 8)
+                return hexString;
+
+            var alpha = (componentSize == 2) ? "00" : "0";
+
+            var value = isAlphaFirst
+                ? alpha + hexString
+                : hexString + alpha;
+
+            return value;
         }
 
         private static Color HexStringToColor(string hexString, int componentSize, bool alphaFirst)
