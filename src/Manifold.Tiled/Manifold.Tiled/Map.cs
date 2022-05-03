@@ -182,39 +182,47 @@ namespace Manifold.Tiled
 
 
 
-        public static Map FromXML(XmlDocument xml)
+        public static Map FromXml(XmlDocument xml, string xpath = "map")
         {
-            var mapNode = xml.SelectSingleNode("map");
+            var mapNode = xml.SelectSingleNode(xpath);
+            var map = FromXmlNode(xml, xpath, mapNode);
+            return map;
+        }
 
+        public static Map FromXmlNode(XmlDocument xml, string xpath, XmlNode? mapNode)
+        {
+            string tag = "map";
             if (mapNode is null)
                 throw new TmxParseException();
+            if (mapNode.Name != tag)
+                throw new XmlNodeParseException();
             if (mapNode.Attributes is null)
                 throw new TmxParseException();
 
             // Set map
             var map = new Map();
-            map.Version = mapNode.Attributes["version"].ValueOrError();
+            map.Version = mapNode.Attributes["version"].ErrorOrValue();
             map.TiledVersion = mapNode.Attributes["tiledversion"]?.Value;
-            map.Orientation = mapNode.Attributes["orientation"].ParseValueOrError((string str) => Enum.Parse<Orientation>(str, true));
-            map.RenderOrder = mapNode.Attributes["renderorder"].ParseValueOrError((string str) => Enum.Parse<RenderOrder>(str.Replace('-', '_'), true));
-            map.CompressionLevel = mapNode.Attributes["compressionlevel"].ParseValueOrNull(int.Parse);
-            map.Width = mapNode.Attributes["width"].ParseValueOrError(int.Parse);
-            map.Height = mapNode.Attributes["height"].ParseValueOrError(int.Parse);
-            map.TileWidth = mapNode.Attributes["tilewidth"].ParseValueOrError(int.Parse);
-            map.TileHeight = mapNode.Attributes["tileheight"].ParseValueOrError(int.Parse);
-            map.HexSideLength = mapNode.Attributes["hexsidelength"].ParseValueOrNull(int.Parse);
-            map.StaggerAxis = mapNode.Attributes["staggeraxis"].ParseValueOrNull((string str) => Enum.Parse<StaggerAxis>(str, true));
-            map.StaggerIndex = mapNode.Attributes["staggerindex"].ParseValueOrNull((string str) => Enum.Parse<StaggerIndex>(str, true));
-            map.ParallaxOriginX = mapNode.Attributes["parallaxoriginx"].ParseValueOrNull(int.Parse);
-            map.ParallaxOriginY = mapNode.Attributes["parallaxoriginy"].ParseValueOrNull(int.Parse);
-            map.BackgroundColor = mapNode.Attributes["backgroundcolor"].ParseValueOrNull(Color.FromHexARGB);
-            map.NextLayerID = mapNode.Attributes["nextlayerid"].ParseValueOrError(int.Parse);
-            map.NextObjectID = mapNode.Attributes["nextobjectid"].ParseValueOrError(int.Parse);
-            map.Infinite = mapNode.Attributes["infinite"].ParseValueOrError(int.Parse);
+            map.Orientation = mapNode.Attributes["orientation"].ErrorOrParseValue((string str) => Enum.Parse<Orientation>(str, true));
+            map.RenderOrder = mapNode.Attributes["renderorder"].ErrorOrParseValue((string str) => Enum.Parse<RenderOrder>(str.Replace('-', '_'), true));
+            map.CompressionLevel = mapNode.Attributes["compressionlevel"].NullOrParseValue(int.Parse);
+            map.Width = mapNode.Attributes["width"].ErrorOrParseValue(int.Parse);
+            map.Height = mapNode.Attributes["height"].ErrorOrParseValue(int.Parse);
+            map.TileWidth = mapNode.Attributes["tilewidth"].ErrorOrParseValue(int.Parse);
+            map.TileHeight = mapNode.Attributes["tileheight"].ErrorOrParseValue(int.Parse);
+            map.HexSideLength = mapNode.Attributes["hexsidelength"].NullOrParseValue(int.Parse);
+            map.StaggerAxis = mapNode.Attributes["staggeraxis"].NullOrParseValue((string str) => Enum.Parse<StaggerAxis>(str, true));
+            map.StaggerIndex = mapNode.Attributes["staggerindex"].NullOrParseValue((string str) => Enum.Parse<StaggerIndex>(str, true));
+            map.ParallaxOriginX = mapNode.Attributes["parallaxoriginx"].NullOrParseValue(int.Parse);
+            map.ParallaxOriginY = mapNode.Attributes["parallaxoriginy"].NullOrParseValue(int.Parse);
+            map.BackgroundColor = mapNode.Attributes["backgroundcolor"].NullOrParseValue(Color.FromHexARGB);
+            map.NextLayerID = mapNode.Attributes["nextlayerid"].ErrorOrParseValue(int.Parse);
+            map.NextObjectID = mapNode.Attributes["nextobjectid"].ErrorOrParseValue(int.Parse);
+            map.Infinite = mapNode.Attributes["infinite"].ErrorOrParseValue(int.Parse);
 
-
-            var tilesets = Tileset.FromXml(xml, "map/tileset");
+            var tilesets = Tileset.FromXmlNodes(xml, $"{xpath}/tileset");
             map.Tilesets.AddRange(tilesets);
+
 
             // TODO:
             // implement the child tag types

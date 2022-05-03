@@ -142,44 +142,32 @@ namespace Manifold.Tiled
         public int Rows => TileCount / Columns;
 
 
-        public static Tileset[] FromXml(XmlDocument document, string xpath)
+        public static Tileset FromXmlNode(XmlDocument xml, string xpath, XmlNode? tilesetNode)
         {
-            var tilesetNodes = document.SelectNodes(xpath);
-            var tilesets = new Tileset[tilesetNodes.Count];
-            for (int i = 0; i < tilesets.Length; i++)
-            {
-                var tilesetNode = tilesetNodes[i];
-                tilesets[i] = FromXmlNode(tilesetNode);
-            }
-            return tilesets;
-        }
-
-        public static Tileset FromXmlNode(XmlNode? tilesetNode)
-        {
-            //
-            if (tilesetNode.Name is not "tileset")
-                throw new XmlNodeParseException("Node is not of type 'tileset'.");
+            string tag = "tileset";
             if (tilesetNode is null)
                 throw new XmlNodeParseException("Node is null.");
+            if (tilesetNode.Name != tag)
+                throw new XmlNodeParseException($"Node is not of type '{tag}'.");
             if (tilesetNode.Attributes is null)
                 throw new XmlNodeParseException("Node.Attributes is null.");
 
             //
             var tileset = new Tileset();
             // Values
-            tileset.FirstGID = tilesetNode.Attributes["firstgid"].ParseValueOrError(int.Parse);
+            tileset.FirstGID = tilesetNode.Attributes["firstgid"].ErrorOrParseValue(int.Parse);
             tileset.Source = tilesetNode.Attributes["source"]?.Value;
-            tileset.Name = tilesetNode.Attributes["name"].ValueOrError();
-            tileset.TileWidth = tilesetNode.Attributes["tilewidth"].ParseValueOrError(int.Parse);
-            tileset.TileHeight = tilesetNode.Attributes["tileheight"].ParseValueOrError(int.Parse);
-            tileset.Spacing = tilesetNode.Attributes["spacing"].ParseValueOrNull(int.Parse);
-            tileset.Margin = tilesetNode.Attributes["margin"].ParseValueOrNull(int.Parse);
-            tileset.TileCount = tilesetNode.Attributes["tilecount"].ParseValueOrError(int.Parse);
-            tileset.Columns = tilesetNode.Attributes["columns"].ParseValueOrError(int.Parse);
-            tileset.ObjectAlignment = tilesetNode.Attributes["objectalignment"].ParseValueOrDefault(
+            tileset.Name = tilesetNode.Attributes["name"].ErrorOrValue();
+            tileset.TileWidth = tilesetNode.Attributes["tilewidth"].ErrorOrParseValue(int.Parse);
+            tileset.TileHeight = tilesetNode.Attributes["tileheight"].ErrorOrParseValue(int.Parse);
+            tileset.Spacing = tilesetNode.Attributes["spacing"].NullOrParseValue(int.Parse);
+            tileset.Margin = tilesetNode.Attributes["margin"].NullOrParseValue(int.Parse);
+            tileset.TileCount = tilesetNode.Attributes["tilecount"].ErrorOrParseValue(int.Parse);
+            tileset.Columns = tilesetNode.Attributes["columns"].ErrorOrParseValue(int.Parse);
+            tileset.ObjectAlignment = tilesetNode.Attributes["objectalignment"].DefaultOrParseValue(
                 (string str) => Enum.Parse<ObjectAlignment>(str, true), ObjectAlignment.Unspecified);
             // Child nodes
-            //tileset.Image =;
+            tileset.Image = Image.FromXml(tilesetNode.InnerXml, "image").GetOnlyValueOrNull();
             //tileset.TileOffset =;
             //tileset.Grid =;
             //tileset.Properties =;
@@ -188,6 +176,9 @@ namespace Manifold.Tiled
 
             return tileset;
         }
+
+        public static Tileset[] FromXmlNodes(XmlDocument document, string xpath)
+            => TiledXmlExtensions.FromXmlNodes(document, xpath, FromXmlNode);
 
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Manifold.Tiled
+﻿using System.Xml;
+
+namespace Manifold.Tiled
 {
     /// <summary>
     /// Tile layer data.
@@ -58,5 +60,36 @@
         /// Whether this Data instance has chunks or not.
         /// </summary>
         public bool HasChunks => Chunks != null && Chunks.Length > 0;
+
+
+
+
+        public static Data FromXmlNode(XmlDocument document, string xpath, XmlNode? dataNode)
+        {
+            string tag = "data";
+            if (dataNode is null)
+                throw new XmlNodeParseException("Node is null.");
+            if (dataNode.Name != tag)
+                throw new XmlNodeParseException($"Node named '{dataNode.Name}' is not of type '{tag}'.");
+            if (dataNode.Attributes is null)
+                throw new XmlNodeParseException("Node.Attributes is null.");
+
+            // Create new from XML
+            var data = new Data();
+            // Values
+            data.Encoding = dataNode.Attributes["encoding"].DefaultOrParseValue((string str) => Enum.Parse<Encoding>(str, true), Encoding.None);
+            data.Compression = dataNode.Attributes["compression"].DefaultOrParseValue((string str) => Enum.Parse<Compression>(str, true), Compression.None);
+            data.Value = dataNode.Value is null ? "" : data.Value;
+            //
+            //data.Tiles = Tile.FromXmlNodes(document, $"{xpath}");
+
+            return data;
+        }
+
+        public static Data[] FromXmlNodes(XmlDocument document, string xpath)
+            => TiledXmlExtensions.FromXmlNodes(document, xpath, FromXmlNode);
+
+        public static Data[] FromXml(string xml, string xpath)
+            => TiledXmlExtensions.FromXml(xml, xpath, FromXmlNode);
     }
 }

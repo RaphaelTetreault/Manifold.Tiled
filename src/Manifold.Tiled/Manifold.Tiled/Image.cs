@@ -1,4 +1,6 @@
-﻿namespace Manifold.Tiled
+﻿using System.Xml;
+
+namespace Manifold.Tiled
 {
     /// <summary>
     /// Represents an image.
@@ -18,7 +20,7 @@
         /// <remarks>
         /// Valid values are file extensions like png, gif, jpg, bmp, etc.
         /// </remarks>
-        public string Format { get; set; } = string.Empty;
+        public string? Format { get; set; } = null;
 
         /// <summary>
         /// The reference to the tileset image file.
@@ -64,6 +66,9 @@
             set => Trans = value;
         }
 
+
+        public Data? Data { get; set; } = null;
+
         /// <summary>
         /// Whether or not this group has a tint color.
         /// </summary>
@@ -78,5 +83,39 @@
         /// Whether or not this image has a height value.
         /// </summary>
         public bool HasHeight => Height != null;
+
+
+
+
+        public static Image FromXmlNode(XmlDocument document, string xpath, XmlNode? imageNode)
+        {
+            string tag = "image";
+            if (imageNode is null)
+                throw new XmlNodeParseException("Node is null.");
+            if (imageNode.Name != tag)
+                throw new XmlNodeParseException($"Node is not of type '{tag}'.");
+            if (imageNode.Attributes is null)
+                throw new XmlNodeParseException("Node.Attributes is null.");
+
+            // Create new from XML
+            var image = new Image();
+            // Values
+            image.Format = imageNode.Attributes["format"]?.Value;
+            image.Source = imageNode.Attributes["source"].ErrorOrValue();
+            image.Trans = imageNode.Attributes["trans"].NullOrParseValue(Color.FromHexARGB);
+            image.Width = imageNode.Attributes["width"].NullOrParseValue(int.Parse);
+            image.Height = imageNode.Attributes["height"].NullOrParseValue(int.Parse);
+            // Child nodes
+            if (!string.IsNullOrEmpty(imageNode.InnerXml))
+                image.Data = Data.FromXml(imageNode.InnerXml, "data").GetOnlyValueOrNull();
+
+            return image;
+        }
+
+        public static Image[] FromXmlNodes(XmlDocument document, string xpath)
+            => TiledXmlExtensions.FromXmlNodes(document, xpath, FromXmlNode);
+
+        public static Image[] FromXml(string xml, string xpath)
+            => TiledXmlExtensions.FromXml(xml, xpath, FromXmlNode);
     }
 }

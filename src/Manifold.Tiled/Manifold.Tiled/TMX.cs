@@ -26,7 +26,7 @@ namespace Manifold.Tiled
             document.LoadXml(data);
 
             var tmx = new TMX();
-            tmx.Map = Map.FromXML(document);
+            tmx.Map = Map.FromXml(document);
 
             throw new NotImplementedException();
             return new TMX();
