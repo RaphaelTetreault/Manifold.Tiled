@@ -33,7 +33,6 @@
         public float Probability { get; set; } = 0;
 
 
-
         /// <summary>
         /// Properties associated with this wang color.
         /// </summary>

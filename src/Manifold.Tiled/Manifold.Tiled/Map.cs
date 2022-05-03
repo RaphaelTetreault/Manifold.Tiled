@@ -130,17 +130,16 @@
         /// <remarks>
         /// 0 for false, 1 for true. Defaults to 0.
         /// </remarks>
-        public byte Infinite { get; set; }
+        public IntBool Infinite { get; set; }
 
 
-        // HELPER PROPERTIES
         /// <summary>
-        /// Whether this map is infinite.
+        /// Whether or not this map is infinite.
         /// </summary>
         public bool IsInfinite
         {
-            get => Infinite > 0;
-            set => Infinite = (byte)(value ? 1 : 0);
+            get => Infinite;
+            set => Infinite = value;
         }
     }
 }

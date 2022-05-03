@@ -5,9 +5,24 @@
     /// </summary>
     public interface IBounded
     {
+        /// <summary>
+        /// 
+        /// </summary>
         int X { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         int Y { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         int Width { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         int Height { get; set; }
     }
 }

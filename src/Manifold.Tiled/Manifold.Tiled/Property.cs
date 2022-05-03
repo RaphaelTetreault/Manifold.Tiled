@@ -41,8 +41,6 @@
         public string Value { get; set; } = string.Empty;
 
 
-
-
         /// <summary>
         /// The property value as a string.
         /// </summary>

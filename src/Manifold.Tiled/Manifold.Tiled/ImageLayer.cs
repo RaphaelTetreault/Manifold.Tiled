@@ -7,7 +7,7 @@
     /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#imagelayer"/>
     /// for more information.
     /// </remarks>
-    public class ImageLayer : 
+    public class ImageLayer :
         IIdentifyable,
         INamed
     {
@@ -46,7 +46,7 @@
         /// <summary>
         /// Whether the layer is shown (1) or hidden (0).
         /// </summary>
-        public byte Visible { get; set; } = 1;
+        public IntBool Visible { get; set; } = 1;
 
         /// <summary>
         ///  A color that is multiplied with the image drawn by this layer.
@@ -56,13 +56,39 @@
         /// <summary>
         /// Whether the image drawn by this layer is repeated along the X axis.
         /// </summary>
-        public byte RepeatX { get; set; } = 0;
+        public IntBool RepeatX { get; set; } = 0;
 
         /// <summary>
         /// Whether the image drawn by this layer is repeated along the Y axis.
         /// </summary>
-        public byte RepeatY { get; set; } = 0;
+        public IntBool RepeatY { get; set; } = 0;
 
+        /// <summary>
+        /// Whether the layer is shown (1) or hidden (0).
+        /// </summary>
+        public bool IsVisible
+        {
+            get => Visible;
+            set => Visible = value;
+        }
+
+        /// <summary>
+        /// Whether the image drawn by this layer is repeated along the X axis.
+        /// </summary>
+        public bool IsRepeatX
+        {
+            get => RepeatX;
+            set => RepeatX = value;
+        }
+
+        /// <summary>
+        /// Whether the image drawn by this layer is repeated along the Y axis.
+        /// </summary>
+        public bool IsRepeatY
+        {
+            get => RepeatY;
+            set => RepeatY = value;
+        }
 
         /// <summary>
         /// Properties associated with this image layer.

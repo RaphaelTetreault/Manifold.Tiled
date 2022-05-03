@@ -42,13 +42,19 @@
         /// <summary>
         /// Whether the layer is shown (1) or hidden (0).
         /// </summary>
-        public byte Visible { get; set; } = 1;
+        public IntBool Visible { get; set; } = 1;
 
         /// <summary>
         /// A color that is multiplied with the image drawn by this layer.
         /// </summary>
         public Color? TintColor { get; set; } = null;
 
+
+        public bool IsVisible
+        {
+            get => Visible;
+            set => Visible = value;
+        }
 
         /// <summary>
         /// Whether or not this group has a tint color.

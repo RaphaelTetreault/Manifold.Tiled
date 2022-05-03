@@ -73,7 +73,7 @@
         /// <remarks>
         /// Defaults to 1.
         /// </remarks>
-        public byte Visible { get; set; } = 1;
+        public IntBool Visible { get; set; } = 1;
 
         /// <summary>
         /// A tint color that is multiplied with any tiles drawn by this layer in #AARRGGBB or #RRGGBB format
@@ -122,17 +122,18 @@
 
 
         /// <summary>
-        /// 
+        /// Whether or not the ID is valid (non-zero).
+        /// </summary>
+        public bool IsValidID => ID != 0;
+
+        /// <summary>
+        /// Whether the layer is shown or hidden.
         /// </summary>
         public bool IsVisible
         {
-            get => Visible > 0;
-            set => Visible = (byte)(value ? 1 : 0);
+            get => Visible;
+            set => Visible = value;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool IsValidID => ID > 0;
     }
 }

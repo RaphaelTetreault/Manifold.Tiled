@@ -1,5 +1,8 @@
 ﻿namespace Manifold.Tiled
 {
+    /// <summary>
+    /// Represents a bool using an underlying integer.
+    /// </summary>
     public struct IntBool
     {
         private int rawValue;

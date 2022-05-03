@@ -93,7 +93,7 @@
         /// <remarks>
         /// Defaults to 1.
         /// </remarks>
-        public byte Visible { get; set; } = 1;
+        public IntBool Visible { get; set; } = 1;
 
         /// <summary>
         /// A reference to a template file.
@@ -102,7 +102,6 @@
         /// Optional.
         /// </remarks>
         public string? Template { get; set; } = null;
-
 
 
 
@@ -136,6 +135,16 @@
         /// </summary>
         public Text? Text { get; set; } = null;
 
+
+
+        /// <summary>
+        /// Whether the layer is shown or hidden.
+        /// </summary>
+        public bool IsVisible
+        {
+            get => Visible;
+            set => Visible = value;
+        }
 
         /// <summary>
         /// Whether or not this object has a property.

@@ -32,7 +32,7 @@
         /// <remarks>
         /// Defaults to 0.
         /// </remarks>
-        public byte Wrap { get; set; } = 0;
+        public IntBool Wrap { get; set; } = 0;
 
         /// <summary>
         /// Color of the text.
@@ -48,7 +48,7 @@
         /// <remarks>
         /// Defaults to 0.
         /// </remarks>
-        public byte Bold { get; set; } = 0;
+        public IntBool Bold { get; set; } = 0;
 
         /// <summary>
         /// Whether the font is italic (1) or not (0).
@@ -56,7 +56,7 @@
         /// <remarks>
         /// Defaults to 0.
         /// </remarks>
-        public byte Italic { get; set; } = 0;
+        public IntBool Italic { get; set; } = 0;
 
         /// <summary>
         /// Whether a line should be drawn below the text (1) or not (0).
@@ -64,7 +64,7 @@
         /// <remarks>
         /// Defaults to 0.
         /// </remarks>
-        public byte Underline { get; set; } = 0;
+        public IntBool Underline { get; set; } = 0;
 
         /// <summary>
         /// Whether a line should be drawn through the text (1) or not (0).
@@ -72,7 +72,7 @@
         /// <remarks>
         /// Defaults to 0.
         /// </remarks>
-        public byte Strikeout { get; set; } = 0;
+        public IntBool Strikeout { get; set; } = 0;
 
         /// <summary>
         /// Whether kerning should be used while rendering the text (1) or not (0).
@@ -80,7 +80,7 @@
         /// <remarks>
         /// Defaults to 0.
         /// </remarks>
-        public byte Kerning { get; set; } = 0;
+        public IntBool Kerning { get; set; } = 0;
 
         /// <summary>
         /// Horizontal alignment of the text within the object.
@@ -108,8 +108,8 @@
         /// </summary>
         public bool DoesWrap
         {
-            get => Wrap > 0;
-            set => Wrap = (byte)(value ? 1 : 0);
+            get => Wrap;
+            set => Wrap = value;
         }
 
         /// <summary>
@@ -117,8 +117,8 @@
         /// </summary>
         public bool IsBold
         {
-            get => Bold > 0;
-            set => Bold = (byte)(value ? 1 : 0);
+            get => Bold;
+            set => Bold = value;
         }
 
         /// <summary>
@@ -126,8 +126,8 @@
         /// </summary>
         public bool IsUnderlined
         {
-            get => Underline > 0;
-            set => Underline = (byte)(value ? 1 : 0);
+            get => Underline;
+            set => Underline = value;
         }
 
         /// <summary>
@@ -135,8 +135,8 @@
         /// </summary>
         public bool IsStrikeout
         {
-            get => Strikeout > 0;
-            set => Strikeout = (byte)(value ? 1 : 0);
+            get => Strikeout;
+            set => Strikeout = value;
         }
 
         /// <summary>
@@ -144,8 +144,8 @@
         /// </summary>
         public bool UsesKerning
         {
-            get => Kerning > 0;
-            set => Kerning = (byte)(value ? 1 : 0);
+            get => Kerning;
+            set => Kerning = value;
         }
     }
 }
