@@ -10,8 +10,8 @@
     /// </remarks>
     public class Object :
         IBounded,
-        IUniquelyIdentifiable,
-        INamed
+        INamed,
+        IUniquelyIdentifiable
     {
         /// <summary>
         /// Unique ID of the object.

@@ -8,6 +8,7 @@
     /// for more information.
     /// </remarks>
     public class ObjectGroup :
+        INamed,
         IUniquelyIdentifiable
     {
         /// <summary>

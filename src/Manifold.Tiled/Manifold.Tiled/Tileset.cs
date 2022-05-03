@@ -8,7 +8,8 @@
     /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#tileset"/>
     /// for more information.
     /// </remarks>
-    public class Tileset
+    public class Tileset : 
+        INamed
     {
         /// <summary>
         /// The first global tile ID of this tileset.
@@ -16,7 +17,7 @@
         /// <remarks>
         /// This global ID maps to the first tile in this tileset.
         /// </remarks>
-        public int FirstGid { get; set; }
+        public int FirstGID { get; set; }
 
         /// <summary>
         /// If this tileset is stored in an external TSX (Tile Set XML) file, this attribute refers to that file. 

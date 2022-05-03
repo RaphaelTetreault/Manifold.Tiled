@@ -7,7 +7,8 @@
     /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#wangcolor"/>
     /// for more information.
     /// </remarks>
-    public class WangColor
+    public class WangColor : 
+        INamed
     {
         /// <summary>
         /// The name of this color.

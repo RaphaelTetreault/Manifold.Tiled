@@ -8,8 +8,8 @@
     /// for more information.
     /// </remarks>
     public class ImageLayer :
-        IUniquelyIdentifiable,
-        INamed
+        INamed,
+        IUniquelyIdentifiable
     {
         /// <summary>
         /// Unique ID of the layer.

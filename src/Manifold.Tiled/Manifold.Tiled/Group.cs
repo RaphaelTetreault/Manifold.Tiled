@@ -9,8 +9,8 @@
     /// for more information.
     /// </remarks>
     public class Group :
-        IUniquelyIdentifiable,
-        INamed
+        INamed,
+        IUniquelyIdentifiable
     {
         /// <summary>
         /// Unique ID of the layer.

@@ -7,7 +7,8 @@
     /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#tmx-wangset"/>
     /// for more information.
     /// </remarks>
-    public class WangSet
+    public class WangSet : 
+        INamed
     {
         /// <summary>
         /// The name of the Wang set.
