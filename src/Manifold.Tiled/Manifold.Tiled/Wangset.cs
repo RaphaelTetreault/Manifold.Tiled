@@ -1,4 +1,6 @@
-﻿namespace Manifold.Tiled
+﻿using System.Xml;
+
+namespace Manifold.Tiled
 {
     /// <summary>
     /// Defines a list of colors and any number of Wang tiles using these colors.
@@ -29,7 +31,7 @@
         /// <summary>
         /// Colors associated with this wang set.
         /// </summary>
-        public WangColor[] Colors { get; set; } = new WangColor[0];
+        public WangColor[] WangColors { get; set; } = new WangColor[0];
 
         /// <summary>
         /// Wang tiles associated with this wang set.
@@ -44,12 +46,46 @@
         /// <summary>
         /// Whether or not this wangset has wang colors.
         /// </summary>
-        public bool HasColors => Colors != null && Colors.Length > 0;
+        public bool HasColors => WangColors != null && WangColors.Length > 0;
 
         /// <summary>
         /// Whether or not this wangset has wang tiles.
         /// </summary>
         public bool HasWangTiles => WangTiles != null && WangTiles.Length > 0;
+
+
+        public static WangSet FromXmlNode(XmlNode? wangSetNode)
+        {
+            string tag = "wangset";
+            if (wangSetNode is null)
+                throw new XmlNodeParseException("Node is null.");
+            if (wangSetNode.Name != tag)
+                throw new XmlNodeParseException($"Node named '{wangSetNode.Name}' is not of type '{tag}'.");
+            if (wangSetNode.Attributes is null)
+                throw new XmlNodeParseException("Node.Attributes is null.");
+
+            // Create new from XML
+            var wangSet = new WangSet();
+            //
+            wangSet.Name = wangSetNode.Attributes["name"].ErrorOrValue();
+            wangSet.Tile = wangSetNode.Attributes["tile"].ErrorOrParseValue(int.Parse);
+            //
+            var hasXml = !string.IsNullOrEmpty(wangSetNode.InnerXml);
+            if (hasXml)
+            {
+                wangSet.Properties = Properties.FromXml(wangSetNode.InnerXml, "properties").GetOnlyValueOrNull();
+                wangSet.WangColors = WangColor.FromXml(wangSetNode.InnerXml, "wangcolor");
+                wangSet.WangTiles = WangTile.FromXml(wangSetNode.InnerXml, "wangtile");
+            }
+
+            return wangSet;
+        }
+
+        public static WangSet[] FromXmlNodes(XmlDocument document, string xpath)
+            => TiledXmlExtensions.FromXmlNodes(document, xpath, FromXmlNode);
+
+        public static WangSet[] FromXml(string xml, string xpath)
+            => TiledXmlExtensions.FromXml(xml, xpath, FromXmlNode);
 
     }
 }

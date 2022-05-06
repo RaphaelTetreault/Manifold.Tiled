@@ -68,7 +68,7 @@ namespace Manifold.Tiled
             var hasXml = !string.IsNullOrEmpty(chunkNode.InnerXml);
             if (hasXml)
             {
-                chunk.Tiles = LayerTile.FromXml(chunkNode.InnerXml, "layertile").GetOnlyValueOrNull();
+                chunk.Tiles = LayerTile.FromXml(chunkNode.InnerXml, "layertile");
             }
             return chunk;
         }

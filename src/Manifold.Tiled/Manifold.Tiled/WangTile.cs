@@ -1,4 +1,6 @@
-﻿namespace Manifold.Tiled
+﻿using System.Xml;
+
+namespace Manifold.Tiled
 {
     /// <summary>
     /// Defines a Wang tile, by referring to a tile in the tileset and associating it with a certain Wang ID.
@@ -24,5 +26,30 @@
         /// bottom left, left, top left
         /// </remarks>
         public int WangGID { get; set; }
+
+
+        public static WangTile FromXmlNode(XmlNode? wangTileNode)
+        {
+            string tag = "wangtile";
+            if (wangTileNode is null)
+                throw new XmlNodeParseException("Node is null.");
+            if (wangTileNode.Name != tag)
+                throw new XmlNodeParseException($"Node named '{wangTileNode.Name}' is not of type '{tag}'.");
+            if (wangTileNode.Attributes is null)
+                throw new XmlNodeParseException("Node.Attributes is null.");
+
+            // Create new from XML
+            var wangTile = new WangTile();
+            wangTile.TileID = wangTileNode.Attributes["tileid"].ErrorOrParseValue(int.Parse);
+            wangTile.WangGID = wangTileNode.Attributes["wanggid"].ErrorOrParseValue(int.Parse);
+
+            return wangTile;
+        }
+
+        public static WangTile[] FromXmlNodes(XmlDocument document, string xpath)
+            => TiledXmlExtensions.FromXmlNodes(document, xpath, FromXmlNode);
+
+        public static WangTile[] FromXml(string xml, string xpath)
+            => TiledXmlExtensions.FromXml(xml, xpath, FromXmlNode);
     }
 }

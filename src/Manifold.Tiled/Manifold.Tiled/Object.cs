@@ -213,11 +213,11 @@ namespace Manifold.Tiled
             if (hasXml)
             {
                 @object.Properties = Properties.FromXml(objectGroupNode.InnerXml, "properties").GetOnlyValueOrNull();
-                @object.Ellipse = Ellipse.FromXml(objectGroupNode.InnerXml, "ellipse");
-                @object.Point = Point.FromXml(objectGroupNode.InnerXml, "point");
-                @object.Polygon = Polygon.FromXml(objectGroupNode.InnerXml, "polygon");
-                @object.Polyline = Polyline.FromXml(objectGroupNode.InnerXml, "polyline");
-                @object.Text = Text.FromXml(objectGroupNode.InnerXml, "text");
+                @object.Ellipse = Ellipse.FromXml(objectGroupNode.InnerXml, "ellipse").GetOnlyValueOrNull();
+                @object.Point = Tiled.Point.FromXml(objectGroupNode.InnerXml, "point").GetOnlyValueOrNull();
+                @object.Polygon = Polygon.FromXml(objectGroupNode.InnerXml, "polygon").GetOnlyValueOrNull();
+                @object.Polyline = Polyline.FromXml(objectGroupNode.InnerXml, "polyline").GetOnlyValueOrNull();
+                @object.Text = Text.FromXml(objectGroupNode.InnerXml, "text").GetOnlyValueOrNull();
             }
 
             return @object;

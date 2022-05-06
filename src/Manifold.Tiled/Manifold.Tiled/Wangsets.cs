@@ -1,4 +1,6 @@
-﻿namespace Manifold.Tiled
+﻿using System.Xml;
+
+namespace Manifold.Tiled
 {
     /// <summary>
     /// Contains the list of Wang sets defined for this tileset.
@@ -21,5 +23,29 @@
         /// The `Values` array should always be initialized with size 0.
         /// </remarks>
         public bool HasValues => Values != null && Values.Length > 0;
+
+
+        public static WangSets FromXmlNode(XmlNode? wangsetsNode)
+        {
+            string tag = "wangsets";
+            if (wangsetsNode is null)
+                throw new XmlNodeParseException("Node is null.");
+            if (wangsetsNode.Name != tag)
+                throw new XmlNodeParseException($"Node named '{wangsetsNode.Name}' is not of type '{tag}'.");
+            if (wangsetsNode.Attributes is null)
+                throw new XmlNodeParseException("Node.Attributes is null.");
+
+            // Create new from XML
+            var wangsets = new WangSets();
+            wangsets.Values = WangSet.FromXml(wangsetsNode.InnerXml, "wangsets");
+
+            return wangsets;
+        }
+
+        public static WangSets[] FromXmlNodes(XmlDocument document, string xpath)
+            => TiledXmlExtensions.FromXmlNodes(document, xpath, FromXmlNode);
+
+        public static WangSets[] FromXml(string xml, string xpath)
+            => TiledXmlExtensions.FromXml(xml, xpath, FromXmlNode);
     }
 }
