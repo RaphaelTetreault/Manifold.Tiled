@@ -1,4 +1,6 @@
-﻿namespace Manifold.Tiled
+﻿using System.Xml;
+
+namespace Manifold.Tiled
 {
     /// <summary>
     /// A rectangle region of a map used when the map is set to 'infinite'.
@@ -42,5 +44,39 @@
         /// Whether or not this chunk has tiles.
         /// </summary>
         public bool HasTiles => Tiles != null && Tiles.Length > 0;
+
+
+
+        public static Chunk FromXmlNode(XmlNode? chunkNode)
+        {
+            string tag = "chunk";
+            if (chunkNode is null)
+                throw new XmlNodeParseException("Node is null.");
+            if (chunkNode.Name != tag)
+                throw new XmlNodeParseException($"Node named '{chunkNode.Name}' is not of type '{tag}'.");
+            if (chunkNode.Attributes is null)
+                throw new XmlNodeParseException("Node.Attributes is null.");
+
+            // Create new from XML
+            var chunk = new Chunk();
+            //
+            chunk.X = chunkNode.Attributes["x"].ErrorOrParseValue(int.Parse);
+            chunk.Y = chunkNode.Attributes["y"].ErrorOrParseValue(int.Parse);
+            chunk.Width = chunkNode.Attributes["width"].ErrorOrParseValue(int.Parse);
+            chunk.Height = chunkNode.Attributes["height"].ErrorOrParseValue(int.Parse);
+            //
+            var hasXml = !string.IsNullOrEmpty(chunkNode.InnerXml);
+            if (hasXml)
+            {
+                chunk.Tiles = LayerTile.FromXml(chunkNode.InnerXml, "layertile").GetOnlyValueOrNull();
+            }
+            return chunk;
+        }
+
+        public static Chunk[] FromXmlNodes(XmlDocument document, string xpath)
+            => TiledXmlExtensions.FromXmlNodes(document, xpath, FromXmlNode);
+
+        public static Chunk[] FromXml(string xml, string xpath)
+            => TiledXmlExtensions.FromXml(xml, xpath, FromXmlNode);
     }
 }

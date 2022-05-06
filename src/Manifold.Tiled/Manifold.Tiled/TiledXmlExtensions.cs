@@ -20,6 +20,14 @@ namespace Manifold.Tiled
                 return attr.Value;
         }
 
+        public static string DefaultOrValue(this XmlAttribute? attr, string @default)
+        {
+            if (attr is null)
+                return @default;
+            else
+                return attr.Value;
+        }
+
         //public static T SafeParseValue<T>(this XmlAttribute? attr, Func<string, T> parseFunction, T ifNullValue)
         //{
         //    if (attr is null)

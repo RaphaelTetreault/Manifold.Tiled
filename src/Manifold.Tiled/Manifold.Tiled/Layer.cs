@@ -1,4 +1,6 @@
-﻿namespace Manifold.Tiled
+﻿using System.Xml;
+
+namespace Manifold.Tiled
 {
     /// <summary>
     /// A tile layer.
@@ -131,6 +133,48 @@
             get => Visible;
             set => Visible = value;
         }
+
+
+
+        public static Layer FromXmlNode(XmlNode? layerNode)
+        {
+            string tag = "layer";
+            if (layerNode is null)
+                throw new XmlNodeParseException("Node is null.");
+            if (layerNode.Name != tag)
+                throw new XmlNodeParseException($"Node named '{layerNode.Name}' is not of type '{tag}'.");
+            if (layerNode.Attributes is null)
+                throw new XmlNodeParseException("Node.Attributes is null.");
+
+            // Create new from XML
+            var layer = new Layer();
+            //
+            layer.ID = layerNode.Attributes["id"].ErrorOrParseValue(uint.Parse);
+            layer.Name = layerNode.Attributes["name"].ErrorOrValue();
+            layer.X = layerNode.Attributes["x"].ErrorOrParseValue(int.Parse);
+            layer.Y = layerNode.Attributes["y"].ErrorOrParseValue(int.Parse);
+            layer.OffsetX = layerNode.Attributes["offsetx"].ErrorOrParseValue(int.Parse);
+            layer.OffsetY = layerNode.Attributes["offsety"].ErrorOrParseValue(int.Parse);
+            layer.Opacity = layerNode.Attributes["opacity"].ErrorOrParseValue(float.Parse);
+            layer.Visible = layerNode.Attributes["visible"].ErrorOrParseValue(int.Parse);
+            layer.TintColor = layerNode.Attributes["tintcolor"].NullOrParseValue(Color.FromHexARGB);
+            layer.OffsetX = layerNode.Attributes["offsetx"].ErrorOrParseValue(int.Parse);
+            layer.OffsetY = layerNode.Attributes["offsety"].ErrorOrParseValue(int.Parse);
+            // Child nodes
+            var hasXml = !string.IsNullOrEmpty(layerNode.InnerXml);
+            if (hasXml)
+            {
+                layer.Data = Data.FromXml(layerNode.InnerXml, "data").GetOnlyValueOrNull();
+            }
+
+            return layer;
+        }
+
+        public static Layer[] FromXmlNodes(XmlDocument document, string xpath)
+            => TiledXmlExtensions.FromXmlNodes(document, xpath, FromXmlNode);
+
+        public static Layer[] FromXml(string xml, string xpath)
+            => TiledXmlExtensions.FromXml(xml, xpath, FromXmlNode);
 
     }
 }

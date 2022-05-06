@@ -1,4 +1,6 @@
-﻿namespace Manifold.Tiled
+﻿using System.Xml;
+
+namespace Manifold.Tiled
 {
     /// <summary>
     /// A layer consisting of a single image.
@@ -109,6 +111,38 @@
         /// Whether or not this image layer has an image.
         /// </summary>
         public bool HasImage => Image != null;
+
+
+        public static ImageLayer FromXmlNode(XmlNode? imageLayerNode)
+        {
+            string tag = "imagelayer";
+            if (imageLayerNode is null)
+                throw new XmlNodeParseException("Node is null.");
+            if (imageLayerNode.Name != tag)
+                throw new XmlNodeParseException($"Node named '{imageLayerNode.Name}' is not of type '{tag}'.");
+            if (imageLayerNode.Attributes is null)
+                throw new XmlNodeParseException("Node.Attributes is null.");
+
+            // Create new from XML
+            var imagelayer = new ImageLayer();
+            imagelayer.ID = imageLayerNode.Attributes["id"].ErrorOrParseValue(uint.Parse);
+            imagelayer.Name = imageLayerNode.Attributes["name"].ErrorOrValue();
+            imagelayer.OffsetX = imageLayerNode.Attributes["offsetx"].ErrorOrParseValue(int.Parse);
+            imagelayer.OffsetY = imageLayerNode.Attributes["offsety"].ErrorOrParseValue(int.Parse);
+            imagelayer.Opacity = imageLayerNode.Attributes["opacity"].ErrorOrParseValue(float.Parse);
+            imagelayer.Visible = imageLayerNode.Attributes["visible"].ErrorOrParseValue(int.Parse);
+            imagelayer.TintColor = imageLayerNode.Attributes["tintcolor"].NullOrParseValue(Color.FromHexARGB);
+            imagelayer.RepeatX = imageLayerNode.Attributes["repeatx"].ErrorOrParseValue(int.Parse);
+            imagelayer.RepeatY = imageLayerNode.Attributes["repeaty"].ErrorOrParseValue(int.Parse);
+
+            return imagelayer;
+        }
+
+        public static ImageLayer[] FromXmlNodes(XmlDocument document, string xpath)
+            => TiledXmlExtensions.FromXmlNodes(document, xpath, FromXmlNode);
+
+        public static ImageLayer[] FromXml(string xml, string xpath)
+            => TiledXmlExtensions.FromXml(xml, xpath, FromXmlNode);
 
     }
 }

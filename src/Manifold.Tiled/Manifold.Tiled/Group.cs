@@ -1,4 +1,6 @@
-﻿namespace Manifold.Tiled
+﻿using System.Xml;
+
+namespace Manifold.Tiled
 {
     /// <summary>
     /// A group layer, used to organize the layers of the map in a hierarchy.
@@ -60,5 +62,36 @@
         /// Whether or not this group has a tint color.
         /// </summary>
         public bool HasTintColor => TintColor != null;
+
+
+
+
+        public static Group FromXmlNode(XmlNode? groupNode)
+        {
+            string tag = "group";
+            if (groupNode is null)
+                throw new XmlNodeParseException("Node is null.");
+            if (groupNode.Name != tag)
+                throw new XmlNodeParseException($"Node named '{groupNode.Name}' is not of type '{tag}'.");
+            if (groupNode.Attributes is null)
+                throw new XmlNodeParseException("Node.Attributes is null.");
+
+            // Create new from XML
+            var group = new Group();
+            group.ID = groupNode.Attributes["id"].ErrorOrParseValue(uint.Parse);
+            group.Name = groupNode.Attributes["name"].ErrorOrValue();
+            group.OffsetX = groupNode.Attributes["offsetx"].ErrorOrParseValue(int.Parse);
+            group.OffsetY = groupNode.Attributes["offsety"].ErrorOrParseValue(int.Parse);
+            group.Visible = groupNode.Attributes["visible"].ErrorOrParseValue(int.Parse);
+            group.TintColor = groupNode.Attributes["tintcolor"].NullOrParseValue(Color.FromHexARGB);
+
+            return group;
+        }
+
+        public static Group[] FromXmlNodes(XmlDocument document, string xpath)
+            => TiledXmlExtensions.FromXmlNodes(document, xpath, FromXmlNode);
+
+        public static Group[] FromXml(string xml, string xpath)
+            => TiledXmlExtensions.FromXml(xml, xpath, FromXmlNode);
     }
 }

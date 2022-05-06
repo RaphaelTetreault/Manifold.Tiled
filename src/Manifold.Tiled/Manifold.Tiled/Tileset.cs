@@ -171,7 +171,7 @@ namespace Manifold.Tiled
             if (hasXml)
             {
                 tileset.Image = Image.FromXml(tilesetNode.InnerXml, "image").GetOnlyValueOrNull();
-                tileset.TileOffset = TileOffset.FromXml(tilesetNode.InnerText, "tileoffset").GetOnlyValueOrNull();
+                tileset.TileOffset = Tiled.TileOffset.FromXml(tilesetNode.InnerText, "tileoffset").GetOnlyValueOrNull();
                 tileset.Grid = Grid.FromXml(tilesetNode.InnerText, "grid").GetOnlyValueOrNull();
                 tileset.Properties = Properties.FromXml(tilesetNode.InnerText, "properties").GetOnlyValueOrNull();
                 tileset.Wangsets = Wangsets.FromXml(tilesetNode.InnerText, "wangsets").GetOnlyValueOrNull();

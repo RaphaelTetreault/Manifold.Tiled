@@ -1,4 +1,6 @@
-﻿namespace Manifold.Tiled
+﻿using System.Xml;
+
+namespace Manifold.Tiled
 {
     /// <summary>
     /// Used to mark an object as a text object. Contains the actual text as character data.
@@ -147,5 +149,40 @@
             get => Kerning;
             set => Kerning = value;
         }
+
+
+        public static Text FromXmlNode(XmlNode? textNode)
+        {
+            string tag = "text";
+            if (textNode is null)
+                throw new XmlNodeParseException("Node is null.");
+            if (textNode.Name != tag)
+                throw new XmlNodeParseException($"Node named '{textNode.Name}' is not of type '{tag}'.");
+            if (textNode.Attributes is null)
+                throw new XmlNodeParseException("Node.Attributes is null.");
+
+            // Create new from XML
+            var text = new Text();
+            text.FontFamily = textNode.Attributes["fontfamily"].DefaultOrValue("sans-serif");
+            text.PixelSize = textNode.Attributes["pixelsize"].ErrorOrParseValue(int.Parse);
+            text.Wrap = textNode.Attributes["wrap"].ErrorOrParseValue(int.Parse);
+            text.Color = textNode.Attributes["color"].ErrorOrParseValue(Color.FromHexARGB);
+            text.Bold = textNode.Attributes["bold"].ErrorOrParseValue(int.Parse);
+            text.Italic = textNode.Attributes["italic"].ErrorOrParseValue(int.Parse);
+            text.Underline = textNode.Attributes["underline"].ErrorOrParseValue(int.Parse);
+            text.Strikeout = textNode.Attributes["strikeout"].ErrorOrParseValue(int.Parse);
+            text.Kerning = textNode.Attributes["kerning"].ErrorOrParseValue(int.Parse);
+            text.HAlign = textNode.Attributes["halign"].ErrorOrParseValue((string str) => Enum.Parse<HorizontalAlignment>(str, true));
+            text.VAlign = textNode.Attributes["valign"].ErrorOrParseValue((string str) => Enum.Parse<VerticalAlignment>(str, true));
+            text.Value = textNode.Attributes["value"].ErrorOrValue();
+
+            return text;
+        }
+
+        public static Text[] FromXmlNodes(XmlDocument document, string xpath)
+            => TiledXmlExtensions.FromXmlNodes(document, xpath, FromXmlNode);
+
+        public static Text[] FromXml(string xml, string xpath)
+            => TiledXmlExtensions.FromXml(xml, xpath, FromXmlNode);
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Manifold.Tiled
+﻿using System.Xml;
+
+namespace Manifold.Tiled
 {
     /// <summary>
     /// This element is only used in case of isometric orientation, and determines
@@ -28,5 +30,32 @@
         /// Height of a grid cell.
         /// </summary>
         public int Height { get; set; }
+
+
+
+        public static Grid FromXmlNode(XmlNode? gridNode)
+        {
+            string tag = "grid";
+            if (gridNode is null)
+                throw new XmlNodeParseException("Node is null.");
+            if (gridNode.Name != tag)
+                throw new XmlNodeParseException($"Node named '{gridNode.Name}' is not of type '{tag}'.");
+            if (gridNode.Attributes is null)
+                throw new XmlNodeParseException("Node.Attributes is null.");
+
+            // Create new from XML
+            var grid = new Grid();
+            grid.Orientation = gridNode.Attributes["orientation"].ErrorOrParseValue((string str) => Enum.Parse<Orientation>(str));
+            grid.Width = gridNode.Attributes["width"].ErrorOrParseValue(int.Parse);
+            grid.Height = gridNode.Attributes["height"].ErrorOrParseValue(int.Parse);
+
+            return grid;
+        }
+
+        public static Grid[] FromXmlNodes(XmlDocument document, string xpath)
+            => TiledXmlExtensions.FromXmlNodes(document, xpath, FromXmlNode);
+
+        public static Grid[] FromXml(string xml, string xpath)
+            => TiledXmlExtensions.FromXml(xml, xpath, FromXmlNode);
     }
 }

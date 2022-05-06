@@ -1,4 +1,6 @@
-﻿namespace Manifold.Tiled
+﻿using System.Xml;
+
+namespace Manifold.Tiled
 {
     /// <summary>
     /// The template root element contains the saved map object and a tileset element that points
@@ -30,5 +32,31 @@
         /// Whether or not this template has an object.
         /// </summary>
         public bool HasObject => Object != null;
+
+
+
+        public static Template FromXmlNode(XmlNode? templateNode)
+        {
+            string tag = "template";
+            if (templateNode is null)
+                throw new XmlNodeParseException("Node is null.");
+            if (templateNode.Name != tag)
+                throw new XmlNodeParseException($"Node named '{templateNode.Name}' is not of type '{tag}'.");
+            if (templateNode.Attributes is null)
+                throw new XmlNodeParseException("Node.Attributes is null.");
+
+            // Create new from XML
+            var template = new Template();
+            template.Tileset = Tileset.FromXml(templateNode.InnerXml, "point").GetOnlyValueOrNull();
+            template.Object = Object.FromXml(templateNode.InnerXml, "point").GetOnlyValueOrNull();
+
+            return template;
+        }
+
+        public static Template[] FromXmlNodes(XmlDocument document, string xpath)
+            => TiledXmlExtensions.FromXmlNodes(document, xpath, FromXmlNode);
+
+        public static Template[] FromXml(string xml, string xpath)
+            => TiledXmlExtensions.FromXml(xml, xpath, FromXmlNode);
     }
 }
