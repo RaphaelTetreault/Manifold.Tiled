@@ -193,11 +193,11 @@ namespace Manifold.Tiled
         {
             string tag = "map";
             if (mapNode is null)
-                throw new TmxParseException();
+                throw new XmlNodeParseException();
             if (mapNode.Name != tag)
                 throw new XmlNodeParseException();
             if (mapNode.Attributes is null)
-                throw new TmxParseException();
+                throw new XmlNodeParseException();
 
             // Set map
             var map = new Map();
@@ -219,14 +219,14 @@ namespace Manifold.Tiled
             map.NextLayerID = mapNode.Attributes["nextlayerid"].ErrorOrParseValue(int.Parse);
             map.NextObjectID = mapNode.Attributes["nextobjectid"].ErrorOrParseValue(int.Parse);
             map.Infinite = mapNode.Attributes["infinite"].ErrorOrParseValue(int.Parse);
-
-            var tilesets = Tileset.FromXmlNodes(xml, $"{xpath}/tileset");
-            map.Tilesets.AddRange(tilesets);
-
-
-            // TODO:
-            // implement the child tag types
-            throw new NotImplementedException();
+            //
+            map.Properties = Properties.FromXmlNodes(xml, "map/properties").GetOnlyValueOrNull();
+            //
+            map.Tilesets.AddRange(Tileset.FromXmlNodes(xml, $"map/tileset"));
+            map.Layers.AddRange(Layer.FromXmlNodes(xml, $"map/layer"));
+            map.ObjectGroups.AddRange(ObjectGroup.FromXmlNodes(xml, $"map/objectgroup"));
+            map.ImageLayers.AddRange(ImageLayer.FromXmlNodes(xml, $"map/imagelayer"));
+            map.Groups.AddRange(Group.FromXmlNodes(xml, $"map/group"));
 
             return map;
         }

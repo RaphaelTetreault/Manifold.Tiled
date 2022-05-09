@@ -34,17 +34,11 @@ namespace Manifold.Tiled
         /// <summary>
         /// The x coordinate of the layer in tiles.
         /// </summary>
-        /// <remarks>
-        /// Defaults to 0 and can not be changed in Tiled.
-        /// </remarks>
         public int X { get; set; } = 0;
 
         /// <summary>
         /// The y coordinate of the layer in tiles.
         /// </summary>
-        /// <remarks>
-        /// Defaults to 0 and can not be changed in Tiled.
-        /// </remarks>
         public int Y { get; set; } = 0;
 
         /// <summary>
@@ -93,7 +87,7 @@ namespace Manifold.Tiled
         /// <remarks>
         /// Defaults to 0.
         /// </remarks>
-        public int OffsetX { get; set; } = 0;
+        public int? OffsetX { get; set; } = null;
 
         /// <summary>
         /// Vertical offset for this layer in pixels.
@@ -101,7 +95,7 @@ namespace Manifold.Tiled
         /// <remarks>
         /// Defaults to 0.
         /// </remarks>
-        public int OffsetY { get; set; } = 0;
+        public int? OffsetY { get; set; } = null;
 
         /// <summary>
         /// Horizontal parallax factor for this layer.
@@ -151,15 +145,15 @@ namespace Manifold.Tiled
             //
             layer.ID = layerNode.Attributes["id"].ErrorOrParseValue(uint.Parse);
             layer.Name = layerNode.Attributes["name"].ErrorOrValue();
-            layer.X = layerNode.Attributes["x"].ErrorOrParseValue(int.Parse);
-            layer.Y = layerNode.Attributes["y"].ErrorOrParseValue(int.Parse);
-            layer.OffsetX = layerNode.Attributes["offsetx"].ErrorOrParseValue(int.Parse);
-            layer.OffsetY = layerNode.Attributes["offsety"].ErrorOrParseValue(int.Parse);
-            layer.Opacity = layerNode.Attributes["opacity"].ErrorOrParseValue(float.Parse);
-            layer.Visible = layerNode.Attributes["visible"].ErrorOrParseValue(int.Parse);
+            layer.X = layerNode.Attributes["x"].DefaultOrParseValue(int.Parse, layer.X);
+            layer.Y = layerNode.Attributes["y"].DefaultOrParseValue(int.Parse, layer.Y);
+            layer.OffsetX = layerNode.Attributes["offsetx"].DefaultOrParseValue(int.Parse, 0);
+            layer.OffsetY = layerNode.Attributes["offsety"].DefaultOrParseValue(int.Parse, 0);
+            layer.Opacity = layerNode.Attributes["opacity"].DefaultOrParseValue(float.Parse, 1f);
+            layer.Visible = layerNode.Attributes["visible"].DefaultOrParseValue(int.Parse, 1);
             layer.TintColor = layerNode.Attributes["tintcolor"].NullOrParseValue(Color.FromHexARGB);
-            layer.OffsetX = layerNode.Attributes["offsetx"].ErrorOrParseValue(int.Parse);
-            layer.OffsetY = layerNode.Attributes["offsety"].ErrorOrParseValue(int.Parse);
+            layer.OffsetX = layerNode.Attributes["offsetx"].DefaultOrParseValue(int.Parse, 0);
+            layer.OffsetY = layerNode.Attributes["offsety"].DefaultOrParseValue(int.Parse, 0);
             // Child nodes
             var hasXml = !string.IsNullOrEmpty(layerNode.InnerXml);
             if (hasXml)

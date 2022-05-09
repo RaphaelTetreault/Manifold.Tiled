@@ -31,7 +31,7 @@ namespace Manifold.Tiled
         /// <remarks>
         /// Defaults to 0.
         /// </remarks>
-        public float? Probability { get; set; } =  null;
+        public float Probability { get; set; } = 0f;
 
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Manifold.Tiled
             // Values
             tile.ID = tileNode.Attributes["id"].ErrorOrParseValue(int.Parse);
             tile.Type = tileNode.Attributes["type"].ErrorOrValue();
-            tile.Probability = tileNode.Attributes["probability"].ErrorOrParseValue(float.Parse);
+            tile.Probability = tileNode.Attributes["probability"].DefaultOrParseValue(float.Parse, 0f);
             // Children
             var hasXml = !string.IsNullOrEmpty(tileNode.InnerXml);
             if (hasXml)

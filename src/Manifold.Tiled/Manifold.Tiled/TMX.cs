@@ -15,6 +15,10 @@ namespace Manifold.Tiled
             if (!isExtensionTmx)
                 throw new FileLoadException("Provided file path is not a Tiled .tmx file.");
 
+            var doesFileExist = File.Exists(path);
+            if (!doesFileExist)
+                throw new FileNotFoundException("File path does not exists.");
+
             string tmxText = File.ReadAllText(path);
             var tmx = FromText(tmxText);
             return tmx;
@@ -28,7 +32,6 @@ namespace Manifold.Tiled
             var tmx = new TMX();
             tmx.Map = Map.FromXml(document);
 
-            throw new NotImplementedException();
             return new TMX();
         }
 

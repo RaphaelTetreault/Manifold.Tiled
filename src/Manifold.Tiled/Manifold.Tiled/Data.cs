@@ -84,8 +84,15 @@ namespace Manifold.Tiled
             var hasXml = !string.IsNullOrEmpty(dataNode.InnerXml);
             if (hasXml)
             {
-                data.Tiles = Tile.FromXml(dataNode.InnerXml, "tile");
-                data.Chunks = Chunk.FromXml(dataNode.InnerXml, "chunk");
+                try
+                {
+                    data.Tiles = Tile.FromXml(dataNode.InnerXml, "tile");
+                    data.Chunks = Chunk.FromXml(dataNode.InnerXml, "chunk");
+                }
+                catch
+                {
+                    Console.WriteLine("TODO: error parsing <data>");
+                }
             }
 
             return data;
@@ -96,5 +103,28 @@ namespace Manifold.Tiled
 
         public static Data[] FromXml(string xml, string xpath)
             => TiledXmlExtensions.FromXml(xml, xpath, FromXmlNode);
+
+
+        public static int[] ParseIndexes(Encoding encoding, string data)
+        {
+            switch (encoding)
+            {
+                case Encoding.CSV: return ParseIndexesCSV(data);
+                case Encoding.Base64: throw new NotImplementedException();
+                case Encoding.None: throw new NotImplementedException();
+
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        private static int[] ParseIndexesCSV(string data)
+        {
+            var cells = data.Split(',');
+            var indexes = new int[cells.Length];
+            for (int i = 0; i < indexes.Length; i++)
+                indexes[i] = int.Parse(cells[i]);
+            return indexes;
+        }
     }
 }
