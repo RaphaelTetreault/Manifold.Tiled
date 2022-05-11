@@ -182,14 +182,14 @@ namespace Manifold.Tiled
 
 
 
-        public static Map FromXml(XmlDocument xml, string xpath = "map")
+        public static Map FromXml(XmlDocument xml)
         {
-            var mapNode = xml.SelectSingleNode(xpath);
-            var map = FromXmlNode(xml, xpath, mapNode);
+            var mapNode = xml.SelectSingleNode("map");
+            var map = FromXmlNode(xml, mapNode);
             return map;
         }
 
-        public static Map FromXmlNode(XmlDocument xml, string xpath, XmlNode? mapNode)
+        public static Map FromXmlNode(XmlDocument xml, XmlNode? mapNode)
         {
             string tag = "map";
             if (mapNode is null)
@@ -230,5 +230,30 @@ namespace Manifold.Tiled
 
             return map;
         }
+
+        public static Map FromFile(string path)
+        {
+            var isExtensionTmx = path.EndsWith(".tmx");
+            if (!isExtensionTmx)
+                throw new FileLoadException("Provided file path is not a Tiled .tmx file.");
+
+            var doesFileExist = File.Exists(path);
+            if (!doesFileExist)
+                throw new FileNotFoundException("File path does not exists.");
+
+            string tmx = File.ReadAllText(path);
+            var map = FromText(tmx);
+            return map;
+        }
+
+        public static Map FromText(string tmxText)
+        {
+            var document = new XmlDocument();
+            document.LoadXml(tmxText);
+
+            var map = FromXml(document);
+            return map;
+        }
+
     }
 }

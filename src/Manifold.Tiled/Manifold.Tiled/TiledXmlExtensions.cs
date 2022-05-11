@@ -44,6 +44,11 @@ namespace Manifold.Tiled
                 return parseFunction.Invoke(attr.Value);
         }
 
+        public static T? DefaultOrParseValue<T>(this XmlAttribute? attr, Func<string, T> parseFunction)
+        {
+            return DefaultOrParseValue(attr, parseFunction, default(T));
+        }
+
         public static T ErrorOrParseValue<T>(this XmlAttribute? attr, Func<string, T> parseFunction)
         {
             if (attr is null)

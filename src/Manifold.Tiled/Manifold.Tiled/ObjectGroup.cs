@@ -138,15 +138,15 @@ namespace Manifold.Tiled
             // Values
             objectGroup.ID = objectGroupNode.Attributes["id"].ErrorOrParseValue(uint.Parse);
             objectGroup.Name = objectGroupNode.Attributes["name"].ErrorOrValue();
-            objectGroup.X = objectGroupNode.Attributes["x"].ErrorOrParseValue(int.Parse);
-            objectGroup.Y = objectGroupNode.Attributes["y"].ErrorOrParseValue(int.Parse);
-            objectGroup.Width = objectGroupNode.Attributes["width"].ErrorOrParseValue(int.Parse);
-            objectGroup.Height = objectGroupNode.Attributes["height"].ErrorOrParseValue(int.Parse);
-            objectGroup.Opacity = objectGroupNode.Attributes["opacity"].ErrorOrParseValue(float.Parse);
-            objectGroup.TintColor = objectGroupNode.Attributes["tintcolor"].ErrorOrParseValue(Color.FromHexARGB);
-            objectGroup.OffsetX = objectGroupNode.Attributes["offsetx"].ErrorOrParseValue(int.Parse);
-            objectGroup.OffsetY = objectGroupNode.Attributes["offsety"].ErrorOrParseValue(int.Parse);
-            objectGroup.DrawOrder = objectGroupNode.Attributes["draworder"].ErrorOrParseValue((string str) => Enum.Parse<DrawOrder>(str, true));
+            objectGroup.X = objectGroupNode.Attributes["x"].DefaultOrParseValue(int.Parse);
+            objectGroup.Y = objectGroupNode.Attributes["y"].DefaultOrParseValue(int.Parse);
+            objectGroup.Width = objectGroupNode.Attributes["width"].DefaultOrParseValue(int.Parse);
+            objectGroup.Height = objectGroupNode.Attributes["height"].DefaultOrParseValue(int.Parse);
+            objectGroup.Opacity = objectGroupNode.Attributes["opacity"].DefaultOrParseValue(float.Parse);
+            objectGroup.TintColor = objectGroupNode.Attributes["tintcolor"].NullOrParseValue(Color.FromHexARGB);
+            objectGroup.OffsetX = objectGroupNode.Attributes["offsetx"].DefaultOrParseValue(int.Parse);
+            objectGroup.OffsetY = objectGroupNode.Attributes["offsety"].DefaultOrParseValue(int.Parse);
+            objectGroup.DrawOrder = objectGroupNode.Attributes["draworder"].DefaultOrParseValue((string str) => Enum.Parse<DrawOrder>(str, true), DrawOrder.TopDown);
             // Children
             var hasXml = !string.IsNullOrEmpty(objectGroupNode.InnerXml);
             if (hasXml)
