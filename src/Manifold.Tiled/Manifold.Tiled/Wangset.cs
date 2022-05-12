@@ -81,8 +81,8 @@ namespace Manifold.Tiled
             return wangSet;
         }
 
-        public static WangSet[] FromXmlNodes(XmlDocument document, string xpath)
-            => TiledParser.FromXmlNodes(document, xpath, FromXmlNode);
+        public static WangSet[] FromXmlDocument(XmlDocument document, string xpath)
+            => TiledParser.FromXmlDocument(document, xpath, FromXmlNode);
 
         public static WangSet[] FromXml(string xml, string xpath)
             => TiledParser.FromXml(xml, xpath, FromXmlNode);

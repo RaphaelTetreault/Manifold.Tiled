@@ -53,8 +53,8 @@ namespace Manifold.Tiled
             return ellipse;
         }
 
-        public static Ellipse[] FromXmlNodes(XmlDocument document, string xpath)
-            => TiledParser.FromXmlNodes(document, xpath, FromXmlNode);
+        public static Ellipse[] FromXmlDocument(XmlDocument document, string xpath)
+            => TiledParser.FromXmlDocument(document, xpath, FromXmlNode);
 
         public static Ellipse[] FromXml(string xml, string xpath)
             => TiledParser.FromXml(xml, xpath, FromXmlNode);

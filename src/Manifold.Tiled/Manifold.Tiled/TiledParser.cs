@@ -56,7 +56,7 @@ namespace Manifold.Tiled
 
         public delegate T ParseNode<T>(XmlNode? node);
 
-        public static T[] FromXmlNodes<T>(XmlDocument xml, string xpath, ParseNode<T> parseNode)
+        public static T[] FromXmlDocument<T>(XmlDocument xml, string xpath, ParseNode<T> parseNode)
         {
             var nodes = xml.SelectNodes(xpath);
             var values = new T[nodes.Count];
@@ -74,7 +74,7 @@ namespace Manifold.Tiled
             document.LoadXml(xml);
 
             var node = document.SelectNodes(xpath);
-            var values = FromXmlNodes(document, xpath, parseNode);
+            var values = FromXmlDocument(document, xpath, parseNode);
 
             return values;
         }

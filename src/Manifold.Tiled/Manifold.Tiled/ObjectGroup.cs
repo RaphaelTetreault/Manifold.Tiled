@@ -158,8 +158,8 @@ namespace Manifold.Tiled
             return objectGroup;
         }
 
-        public static ObjectGroup[] FromXmlNodes(XmlDocument document, string xpath)
-            => TiledParser.FromXmlNodes(document, xpath, FromXmlNode);
+        public static ObjectGroup[] FromXmlDocument(XmlDocument document, string xpath)
+            => TiledParser.FromXmlDocument(document, xpath, FromXmlNode);
 
         public static ObjectGroup[] FromXml(string xml, string xpath)
             => TiledParser.FromXml(xml, xpath, FromXmlNode);

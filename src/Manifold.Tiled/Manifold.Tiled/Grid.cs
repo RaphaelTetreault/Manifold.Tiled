@@ -52,8 +52,8 @@ namespace Manifold.Tiled
             return grid;
         }
 
-        public static Grid[] FromXmlNodes(XmlDocument document, string xpath)
-            => TiledParser.FromXmlNodes(document, xpath, FromXmlNode);
+        public static Grid[] FromXmlDocument(XmlDocument document, string xpath)
+            => TiledParser.FromXmlDocument(document, xpath, FromXmlNode);
 
         public static Grid[] FromXml(string xml, string xpath)
             => TiledParser.FromXml(xml, xpath, FromXmlNode);

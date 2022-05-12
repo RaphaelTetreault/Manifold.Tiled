@@ -182,14 +182,14 @@ namespace Manifold.Tiled
 
 
 
-        public static Map FromXml(XmlDocument xml)
+        public static Map FromXml(XmlDocument document)
         {
-            var mapNode = xml.SelectSingleNode("map");
-            var map = FromXmlNode(xml, mapNode);
+            var mapNode = document.SelectSingleNode("map");
+            var map = FromXmlNode(document, mapNode);
             return map;
         }
 
-        public static Map FromXmlNode(XmlDocument xml, XmlNode? mapNode)
+        public static Map FromXmlNode(XmlDocument document, XmlNode? mapNode)
         {
             string tag = "map";
             if (mapNode is null)
@@ -220,13 +220,13 @@ namespace Manifold.Tiled
             map.NextObjectID = mapNode.Attributes["nextobjectid"].ErrorOrParseValue(int.Parse);
             map.Infinite = mapNode.Attributes["infinite"].ErrorOrParseValue(int.Parse);
             //
-            map.Properties = Properties.FromXmlNodes(xml, "map/properties").GetOnlyValueOrNull();
+            map.Properties = Properties.FromXmlDocument(document, "map/properties").GetOnlyValueOrNull();
             //
-            map.Tilesets.AddRange(Tileset.FromXmlNodes(xml, $"map/tileset"));
-            map.Layers.AddRange(Layer.FromXmlNodes(xml, $"map/layer"));
-            map.ObjectGroups.AddRange(ObjectGroup.FromXmlNodes(xml, $"map/objectgroup"));
-            map.ImageLayers.AddRange(ImageLayer.FromXmlNodes(xml, $"map/imagelayer"));
-            map.Groups.AddRange(Group.FromXmlNodes(xml, $"map/group"));
+            map.Tilesets.AddRange(Tileset.FromXmlDocument(document, $"map/tileset"));
+            map.Layers.AddRange(Layer.FromXmlDocument(document, $"map/layer"));
+            map.ObjectGroups.AddRange(ObjectGroup.FromXmlDocument(document, $"map/objectgroup"));
+            map.ImageLayers.AddRange(ImageLayer.FromXmlDocument(document, $"map/imagelayer"));
+            map.Groups.AddRange(Group.FromXmlDocument(document, $"map/group"));
 
             return map;
         }
