@@ -125,5 +125,33 @@ namespace Manifold.Tiled
                 indexes[i] = int.Parse(cells[i]);
             return indexes;
         }
+
+        /// <summary>
+        /// Mutate the underlying tile GIDs in this structure by <paramref name="gidOffset"/>.
+        /// </summary>
+        /// <param name="gidOffset">The amount to add to each tile GID.</param>
+        public void OffsetTileGIDs(int gidOffset)
+        {
+            for (int i = 0; i < TileGIDs.Length; i++)
+                TileGIDs[i] += gidOffset;
+        }
+
+        /// <summary>
+        /// Create new array of IDs offset by <paramref name="gidOffset"/>.
+        /// Does not mutate underlying data.
+        /// </summary>
+        /// <param name="gidOffset">The amount to add to each tile GID.</param>
+        /// <returns>
+        /// Returns new array of Tile IDs.
+        /// </returns>
+        public int[] GetOffsetTileGIDs(int gidOffset)
+        {
+            var gids = new int[TileGIDs.Length];
+
+            for (int i = 0; i < TileGIDs.Length; i++)
+                gids[i] = TileGIDs[i] + gidOffset;
+
+            return gids;
+        }
     }
 }
