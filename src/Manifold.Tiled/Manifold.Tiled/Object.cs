@@ -11,7 +11,7 @@ namespace Manifold.Tiled
     /// for more information.
     /// </remarks>
     public class Object :
-        IBounded,
+        //IBounded,
         INamed,
         IUniquelyIdentifiable
     {
@@ -47,7 +47,7 @@ namespace Manifold.Tiled
         /// <remarks>
         /// Defaults to 0.
         /// </remarks>
-        public int X { get; set; } = 0;
+        public double X { get; set; } = 0;
 
         /// <summary>
         /// The y coordinate of the object in pixels.
@@ -55,7 +55,7 @@ namespace Manifold.Tiled
         ///  <remarks>
         /// Defaults to 0.
         /// </remarks>
-        public int Y { get; set; } = 0;
+        public double Y { get; set; } = 0;
 
         /// <summary>
         /// The width of the object in pixels.
@@ -185,39 +185,39 @@ namespace Manifold.Tiled
         public bool HasText => Text != null;
 
 
-        public static Object FromXmlNode(XmlNode? objectGroupNode)
+        public static Object FromXmlNode(XmlNode? objectNode)
         {
             string tag = "object";
-            if (objectGroupNode is null)
+            if (objectNode is null)
                 throw new XmlNodeParseException("Node is null.");
-            if (objectGroupNode.Name != tag)
-                throw new XmlNodeParseException($"Node named '{objectGroupNode.Name}' is not of type '{tag}'.");
-            if (objectGroupNode.Attributes is null)
+            if (objectNode.Name != tag)
+                throw new XmlNodeParseException($"Node named '{objectNode.Name}' is not of type '{tag}'.");
+            if (objectNode.Attributes is null)
                 throw new XmlNodeParseException("Node.Attributes is null.");
 
             // Create new from XML
             var @object = new Object();
             // Values
-            @object.ID = objectGroupNode.Attributes["id"].ErrorOrParseValue(int.Parse);
-            @object.Name = objectGroupNode.Attributes["name"].ErrorOrValue();
-            @object.Type = objectGroupNode.Attributes["type"].ErrorOrValue();
-            @object.X = objectGroupNode.Attributes["x"].ErrorOrParseValue(int.Parse);
-            @object.Y = objectGroupNode.Attributes["y"].ErrorOrParseValue(int.Parse);
-            @object.Width = objectGroupNode.Attributes["width"].ErrorOrParseValue(int.Parse);
-            @object.Height = objectGroupNode.Attributes["height"].ErrorOrParseValue(int.Parse);
-            @object.Rotation = objectGroupNode.Attributes["rotation"].ErrorOrParseValue(float.Parse);
-            @object.GID = objectGroupNode.Attributes["gid"].ErrorOrParseValue(int.Parse);
-            @object.Visible = objectGroupNode.Attributes["visible"].ErrorOrParseValue(int.Parse);
+            @object.ID = objectNode.Attributes["id"].ErrorOrParseValue(int.Parse);
+            @object.Name = objectNode.Attributes["name"].DefaultOrValue(string.Empty);
+            @object.Type = objectNode.Attributes["type"].DefaultOrValue(string.Empty);
+            @object.X = objectNode.Attributes["x"].ErrorOrParseValue(double.Parse);
+            @object.Y = objectNode.Attributes["y"].ErrorOrParseValue(double.Parse);
+            @object.Width = objectNode.Attributes["width"].ErrorOrParseValue(int.Parse);
+            @object.Height = objectNode.Attributes["height"].ErrorOrParseValue(int.Parse);
+            @object.Rotation = objectNode.Attributes["rotation"].DefaultOrParseValue(float.Parse);
+            @object.GID = objectNode.Attributes["gid"].NullOrParseValue(int.Parse);
+            @object.Visible = objectNode.Attributes["visible"].DefaultOrParseValue(int.Parse, 1);
             // Children
-            var hasXml = !string.IsNullOrEmpty(objectGroupNode.InnerXml);
+            var hasXml = !string.IsNullOrEmpty(objectNode.InnerXml);
             if (hasXml)
             {
-                @object.Properties = Properties.FromXml(objectGroupNode.InnerXml, "properties").GetOnlyValueOrNull();
-                @object.Ellipse = Ellipse.FromXml(objectGroupNode.InnerXml, "ellipse").GetOnlyValueOrNull();
-                @object.Point = Tiled.Point.FromXml(objectGroupNode.InnerXml, "point").GetOnlyValueOrNull();
-                @object.Polygon = Polygon.FromXml(objectGroupNode.InnerXml, "polygon").GetOnlyValueOrNull();
-                @object.Polyline = Polyline.FromXml(objectGroupNode.InnerXml, "polyline").GetOnlyValueOrNull();
-                @object.Text = Text.FromXml(objectGroupNode.InnerXml, "text").GetOnlyValueOrNull();
+                @object.Properties = Properties.FromXml(objectNode.InnerXml, "properties").GetOnlyValueOrNull();
+                @object.Ellipse = Ellipse.FromXml(objectNode.InnerXml, "ellipse").GetOnlyValueOrNull();
+                @object.Point = Tiled.Point.FromXml(objectNode.InnerXml, "point").GetOnlyValueOrNull();
+                @object.Polygon = Polygon.FromXml(objectNode.InnerXml, "polygon").GetOnlyValueOrNull();
+                @object.Polyline = Polyline.FromXml(objectNode.InnerXml, "polyline").GetOnlyValueOrNull();
+                @object.Text = Text.FromXml(objectNode.InnerXml, "text").GetOnlyValueOrNull();
             }
 
             return @object;

@@ -11,13 +11,17 @@ namespace Manifold.Tiled
     /// </remarks>
     public class Text
     {
+        public const string kFontFamily = "sans-serif";
+        private const int kPixelSize = 16;
+
+
         /// <summary>
         /// The font family used.
         /// </summary>
         /// <remarks>
         /// Defaults to "sans-serif".
         /// </remarks>
-        public string FontFamily { get; set; } = "sans-serif";
+        public string FontFamily { get; set; } = kFontFamily;
 
         /// <summary>
         /// The size of the font in pixels.
@@ -26,7 +30,7 @@ namespace Manifold.Tiled
         /// Does not use points because other sizes in the TMX format are also using pixels.
         /// Defaults to 16.
         /// </remarks>
-        public int PixelSize { get; set; } = 16;
+        public int PixelSize { get; set; } = kPixelSize;
 
         /// <summary>
         /// Whether word wrapping is enabled (1) or disabled (0).
@@ -163,18 +167,18 @@ namespace Manifold.Tiled
 
             // Create new from XML
             var text = new Text();
-            text.FontFamily = textNode.Attributes["fontfamily"].DefaultOrValue("sans-serif");
-            text.PixelSize = textNode.Attributes["pixelsize"].ErrorOrParseValue(int.Parse);
+            text.FontFamily = textNode.Attributes["fontfamily"].DefaultOrValue(kFontFamily);
+            text.PixelSize = textNode.Attributes["pixelsize"].DefaultOrParseValue(int.Parse, kPixelSize);
             text.Wrap = textNode.Attributes["wrap"].ErrorOrParseValue(int.Parse);
-            text.Color = textNode.Attributes["color"].ErrorOrParseValue(Color.FromHexARGB);
-            text.Bold = textNode.Attributes["bold"].ErrorOrParseValue(int.Parse);
-            text.Italic = textNode.Attributes["italic"].ErrorOrParseValue(int.Parse);
-            text.Underline = textNode.Attributes["underline"].ErrorOrParseValue(int.Parse);
-            text.Strikeout = textNode.Attributes["strikeout"].ErrorOrParseValue(int.Parse);
-            text.Kerning = textNode.Attributes["kerning"].ErrorOrParseValue(int.Parse);
-            text.HAlign = textNode.Attributes["halign"].ErrorOrParseValue(TiledEnumUtility.Parse<HorizontalAlignment>);
-            text.VAlign = textNode.Attributes["valign"].ErrorOrParseValue(TiledEnumUtility.Parse<VerticalAlignment>);
-            text.Value = textNode.Attributes["value"].ErrorOrValue();
+            text.Color = textNode.Attributes["color"].NullOrParseValue(Color.FromHexARGB);
+            text.Bold = textNode.Attributes["bold"].DefaultOrParseValue(int.Parse);
+            text.Italic = textNode.Attributes["italic"].DefaultOrParseValue(int.Parse);
+            text.Underline = textNode.Attributes["underline"].DefaultOrParseValue(int.Parse);
+            text.Strikeout = textNode.Attributes["strikeout"].DefaultOrParseValue(int.Parse);
+            text.Kerning = textNode.Attributes["kerning"].DefaultOrParseValue(int.Parse);
+            text.HAlign = textNode.Attributes["halign"].DefaultOrParseValue(TiledEnumUtility.Parse<HorizontalAlignment>);
+            text.VAlign = textNode.Attributes["valign"].DefaultOrParseValue(TiledEnumUtility.Parse<VerticalAlignment>);
+            text.Value = textNode.InnerText;
 
             return text;
         }
