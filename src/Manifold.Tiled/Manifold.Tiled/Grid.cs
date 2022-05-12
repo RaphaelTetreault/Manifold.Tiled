@@ -45,7 +45,7 @@ namespace Manifold.Tiled
 
             // Create new from XML
             var grid = new Grid();
-            grid.Orientation = gridNode.Attributes["orientation"].ErrorOrParseValue((string str) => Enum.Parse<Orientation>(str));
+            grid.Orientation = gridNode.Attributes["orientation"].ErrorOrParseValue(TiledEnumUtility.Parse<Orientation>);
             grid.Width = gridNode.Attributes["width"].ErrorOrParseValue(int.Parse);
             grid.Height = gridNode.Attributes["height"].ErrorOrParseValue(int.Parse);
 

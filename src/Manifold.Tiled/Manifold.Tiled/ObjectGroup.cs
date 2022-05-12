@@ -146,7 +146,7 @@ namespace Manifold.Tiled
             objectGroup.TintColor = objectGroupNode.Attributes["tintcolor"].NullOrParseValue(Color.FromHexARGB);
             objectGroup.OffsetX = objectGroupNode.Attributes["offsetx"].DefaultOrParseValue(int.Parse);
             objectGroup.OffsetY = objectGroupNode.Attributes["offsety"].DefaultOrParseValue(int.Parse);
-            objectGroup.DrawOrder = objectGroupNode.Attributes["draworder"].DefaultOrParseValue((string str) => Enum.Parse<DrawOrder>(str, true), DrawOrder.TopDown);
+            objectGroup.DrawOrder = objectGroupNode.Attributes["draworder"].DefaultOrParseValue(TiledEnumUtility.Parse<DrawOrder>, DrawOrder.TopDown);
             // Children
             var hasXml = !string.IsNullOrEmpty(objectGroupNode.InnerXml);
             if (hasXml)

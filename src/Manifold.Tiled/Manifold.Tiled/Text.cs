@@ -172,8 +172,8 @@ namespace Manifold.Tiled
             text.Underline = textNode.Attributes["underline"].ErrorOrParseValue(int.Parse);
             text.Strikeout = textNode.Attributes["strikeout"].ErrorOrParseValue(int.Parse);
             text.Kerning = textNode.Attributes["kerning"].ErrorOrParseValue(int.Parse);
-            text.HAlign = textNode.Attributes["halign"].ErrorOrParseValue((string str) => Enum.Parse<HorizontalAlignment>(str, true));
-            text.VAlign = textNode.Attributes["valign"].ErrorOrParseValue((string str) => Enum.Parse<VerticalAlignment>(str, true));
+            text.HAlign = textNode.Attributes["halign"].ErrorOrParseValue(TiledEnumUtility.Parse<HorizontalAlignment>);
+            text.VAlign = textNode.Attributes["valign"].ErrorOrParseValue(TiledEnumUtility.Parse<VerticalAlignment>);
             text.Value = textNode.Attributes["value"].ErrorOrValue();
 
             return text;

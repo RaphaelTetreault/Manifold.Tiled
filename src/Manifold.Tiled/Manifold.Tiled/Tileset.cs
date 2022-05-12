@@ -10,7 +10,7 @@ namespace Manifold.Tiled
     /// See <see href="https://doc.mapeditor.org/en/stable/reference/tmx-map-format/#tileset"/>
     /// for more information.
     /// </remarks>
-    public class Tileset : 
+    public class Tileset :
         INamed
     {
         /// <summary>
@@ -87,22 +87,22 @@ namespace Manifold.Tiled
         /// Tile offset for this tileset.
         /// </summary>
         public TileOffset? TileOffset { get; set; } = null;
-        
+
         /// <summary>
         /// Grid associated with this tileset.
         /// </summary>
         public Grid? Grid { get; set; } = null;
-        
+
         /// <summary>
         /// Properties associated with this tileset.
         /// </summary>
         public Properties? Properties { get; set; } = null;
-        
+
         /// <summary>
         /// Wangsets associated with this tileset.
         /// </summary>
         public WangSets? Wangsets { get; set; } = null;
-        
+
         /// <summary>
         /// Tiles for this tileset.
         /// </summary>
@@ -164,8 +164,7 @@ namespace Manifold.Tiled
             tileset.Margin = tilesetNode.Attributes["margin"].NullOrParseValue(int.Parse);
             tileset.TileCount = tilesetNode.Attributes["tilecount"].ErrorOrParseValue(int.Parse);
             tileset.Columns = tilesetNode.Attributes["columns"].ErrorOrParseValue(int.Parse);
-            tileset.ObjectAlignment = tilesetNode.Attributes["objectalignment"].DefaultOrParseValue(
-                (string str) => Enum.Parse<ObjectAlignment>(str, true), ObjectAlignment.Unspecified);
+            tileset.ObjectAlignment = tilesetNode.Attributes["objectalignment"].DefaultOrParseValue(TiledEnumUtility.Parse<ObjectAlignment>);
             // Child nodes
             var hasXml = !string.IsNullOrEmpty(tilesetNode.InnerXml);
             if (hasXml)

@@ -57,6 +57,8 @@ namespace Manifold.Tiled
                 return parseFunction.Invoke(attr.Value);
         }
 
+
+
         public static T? NullOrParseValue<T>(this XmlAttribute? attr, Func<string, T> parseFunction)
         {
             if (attr is null)

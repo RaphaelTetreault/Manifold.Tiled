@@ -77,8 +77,8 @@ namespace Manifold.Tiled
             // Create new from XML
             var data = new Data();
             // Values
-            data.Encoding = dataNode.Attributes["encoding"].DefaultOrParseValue((string str) => Enum.Parse<Encoding>(str, true), Encoding.None);
-            data.Compression = dataNode.Attributes["compression"].DefaultOrParseValue((string str) => Enum.Parse<Compression>(str, true), Compression.None);
+            data.Encoding = dataNode.Attributes["encoding"].DefaultOrParseValue(TiledEnumUtility.Parse<Encoding>);
+            data.Compression = dataNode.Attributes["compression"].DefaultOrParseValue(TiledEnumUtility.Parse<Compression>);
             data.Value = dataNode.Value is null ? "" : data.Value;
             // Children
             var hasXml = !string.IsNullOrEmpty(dataNode.InnerXml);

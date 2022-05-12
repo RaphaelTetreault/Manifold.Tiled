@@ -116,7 +116,7 @@ namespace Manifold.Tiled
             var property = new Property();
             //
             property.Name = propertyNode.Attributes["name"].ErrorOrValue();
-            property.Type = propertyNode.Attributes["type"].ErrorOrParseValue((string str) => Enum.Parse<PropertyType>(str, true));
+            property.Type = propertyNode.Attributes["type"].ErrorOrParseValue(TiledEnumUtility.Parse<PropertyType>);
             property.PropertyType = propertyNode.Attributes["propertytype"]?.Value;
             property.Value = propertyNode.Attributes["propertytype"].ErrorOrValue();
             //
