@@ -21,7 +21,7 @@ namespace Manifold.Tiled
         /// ach layer that added to a map gets a unique id. Even if a layer is
         /// deleted, no layer ever gets the same ID.
         /// </remarks>
-        public uint ID { get; set; } = 0;
+        public int ID { get; set; } = 0;
 
         /// <summary>
         /// The name of the layer.
@@ -143,7 +143,7 @@ namespace Manifold.Tiled
             // Create new from XML
             var layer = new Layer();
             //
-            layer.ID = layerNode.Attributes["id"].ErrorOrParseValue(uint.Parse);
+            layer.ID = layerNode.Attributes["id"].ErrorOrParseValue(int.Parse);
             layer.Name = layerNode.Attributes["name"].ErrorOrValue();
             layer.X = layerNode.Attributes["x"].DefaultOrParseValue(int.Parse, layer.X);
             layer.Y = layerNode.Attributes["y"].DefaultOrParseValue(int.Parse, layer.Y);

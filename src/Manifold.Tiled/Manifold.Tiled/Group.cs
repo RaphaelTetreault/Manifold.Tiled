@@ -21,7 +21,7 @@ namespace Manifold.Tiled
         /// Defaults to 0.
         /// Valid IDs are at least 1.
         /// </remarks>
-        public uint ID { get; set; } = 0;
+        public int ID { get; set; } = 0;
 
         /// <summary>
         /// The name of the image layer.
@@ -81,7 +81,7 @@ namespace Manifold.Tiled
 
             // Create new from XML
             var group = new Group();
-            group.ID = groupNode.Attributes["id"].ErrorOrParseValue(uint.Parse);
+            group.ID = groupNode.Attributes["id"].ErrorOrParseValue(int.Parse);
             group.Name = groupNode.Attributes["name"].ErrorOrValue();
             group.OffsetX = groupNode.Attributes["offsetx"].DefaultOrParseValue(int.Parse);
             group.OffsetY = groupNode.Attributes["offsety"].DefaultOrParseValue(int.Parse);

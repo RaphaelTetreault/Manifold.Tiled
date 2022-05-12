@@ -21,7 +21,7 @@ namespace Manifold.Tiled
         /// Each group that added to a map gets a unique id. Even if a group is
         /// deleted, no group ever gets the same ID.
         /// </remarks>
-        public uint ID { get; set; } = 0;
+        public int ID { get; set; } = 0;
 
         /// <summary>
         /// The name of the group.
@@ -136,7 +136,7 @@ namespace Manifold.Tiled
             // Create new from XML
             var objectGroup = new ObjectGroup();
             // Values
-            objectGroup.ID = objectGroupNode.Attributes["id"].ErrorOrParseValue(uint.Parse);
+            objectGroup.ID = objectGroupNode.Attributes["id"].ErrorOrParseValue(int.Parse);
             objectGroup.Name = objectGroupNode.Attributes["name"].ErrorOrValue();
             objectGroup.X = objectGroupNode.Attributes["x"].DefaultOrParseValue(int.Parse);
             objectGroup.Y = objectGroupNode.Attributes["y"].DefaultOrParseValue(int.Parse);

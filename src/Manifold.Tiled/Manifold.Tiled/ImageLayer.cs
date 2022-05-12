@@ -20,7 +20,7 @@ namespace Manifold.Tiled
         /// Defaults to 0.
         /// Valid IDs are at least 1.
         /// </remarks>
-        public uint ID { get; set; } = 0;
+        public int ID { get; set; } = 0;
 
         /// <summary>
         /// The name of the image layer.
@@ -125,7 +125,7 @@ namespace Manifold.Tiled
 
             // Create new from XML
             var imagelayer = new ImageLayer();
-            imagelayer.ID = imageLayerNode.Attributes["id"].ErrorOrParseValue(uint.Parse);
+            imagelayer.ID = imageLayerNode.Attributes["id"].ErrorOrParseValue(int.Parse);
             imagelayer.Name = imageLayerNode.Attributes["name"].ErrorOrValue();
             imagelayer.OffsetX = imageLayerNode.Attributes["offsetx"].ErrorOrParseValue(int.Parse);
             imagelayer.OffsetY = imageLayerNode.Attributes["offsety"].ErrorOrParseValue(int.Parse);

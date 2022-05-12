@@ -14,12 +14,12 @@ namespace Manifold.Tiled
         /// <summary>
         /// X coordinate.
         /// </summary>
-        public uint x;
+        public int x;
 
         /// <summary>
         /// Y coordinate.
         /// </summary>
-        public uint y;
+        public int y;
 
 
         public static Point FromXmlNode(XmlNode? pointNode)
@@ -34,8 +34,8 @@ namespace Manifold.Tiled
 
             // Create new from XML
             var point = new Point();
-            point.x = pointNode.Attributes["x"].ErrorOrParseValue(uint.Parse);
-            point.y = pointNode.Attributes["y"].ErrorOrParseValue(uint.Parse);
+            point.x = pointNode.Attributes["x"].ErrorOrParseValue(int.Parse);
+            point.y = pointNode.Attributes["y"].ErrorOrParseValue(int.Parse);
 
             return point;
         }

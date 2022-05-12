@@ -23,7 +23,7 @@ namespace Manifold.Tiled
         /// Each object that is placed on a map gets a unique ID.
         /// Even if an object was deleted, no object gets the same ID.
         /// </remarks>
-        public uint ID { get; set; } = 0;
+        public int ID { get; set; } = 0;
 
         /// <summary>
         /// The name of the object. An arbitrary string.
@@ -87,7 +87,7 @@ namespace Manifold.Tiled
         /// <remarks>
         /// Optional.
         /// </remarks>
-        public uint? GID { get; set; } = null;
+        public int? GID { get; set; } = null;
 
         /// <summary>
         /// Whether the object is shown (1) or hidden (0).
@@ -198,7 +198,7 @@ namespace Manifold.Tiled
             // Create new from XML
             var @object = new Object();
             // Values
-            @object.ID = objectGroupNode.Attributes["id"].ErrorOrParseValue(uint.Parse);
+            @object.ID = objectGroupNode.Attributes["id"].ErrorOrParseValue(int.Parse);
             @object.Name = objectGroupNode.Attributes["name"].ErrorOrValue();
             @object.Type = objectGroupNode.Attributes["type"].ErrorOrValue();
             @object.X = objectGroupNode.Attributes["x"].ErrorOrParseValue(int.Parse);
@@ -206,7 +206,7 @@ namespace Manifold.Tiled
             @object.Width = objectGroupNode.Attributes["width"].ErrorOrParseValue(int.Parse);
             @object.Height = objectGroupNode.Attributes["height"].ErrorOrParseValue(int.Parse);
             @object.Rotation = objectGroupNode.Attributes["rotation"].ErrorOrParseValue(float.Parse);
-            @object.GID = objectGroupNode.Attributes["gid"].ErrorOrParseValue(uint.Parse);
+            @object.GID = objectGroupNode.Attributes["gid"].ErrorOrParseValue(int.Parse);
             @object.Visible = objectGroupNode.Attributes["visible"].ErrorOrParseValue(int.Parse);
             // Children
             var hasXml = !string.IsNullOrEmpty(objectGroupNode.InnerXml);

@@ -8,6 +8,6 @@
         /// <summary>
         /// Unique ID.
         /// </summary>
-        public uint ID { get; set; }
+        public int ID { get; set; }
     }
 }
