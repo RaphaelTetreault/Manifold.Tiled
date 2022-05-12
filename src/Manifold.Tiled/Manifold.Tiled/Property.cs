@@ -23,12 +23,18 @@ namespace Manifold.Tiled
         /// <summary>
         /// The type of the property.
         /// </summary>
+        /// <remarks>
+        /// If not defined in the source file, defaults to `Default`.
+        /// </remarks>
         public PropertyType Type { get; set; } = Tiled.PropertyType.Default;
 
         /// <summary>
         /// The name of the custom property type, when applicable
         /// </summary>
-        public string? PropertyType { get; set; } = string.Empty;
+        /// <remarks>
+        /// If not defined in the source file, defaults to "".
+        /// </remarks>
+        public string PropertyType { get; set; } = string.Empty;
 
         /// <summary>
         /// The value of the property.
@@ -114,10 +120,9 @@ namespace Manifold.Tiled
 
             // Create new from XML
             var property = new Property();
-            //
             property.Name = propertyNode.Attributes["name"].ErrorOrValue();
-            property.Type = propertyNode.Attributes["type"].ErrorOrParseValue(TiledEnumUtility.Parse<PropertyType>);
-            property.PropertyType = propertyNode.Attributes["propertytype"]?.Value;
+            property.Type = propertyNode.Attributes["type"].DefaultOrParseValue(TiledEnumUtility.Parse<PropertyType>);
+            property.PropertyType = propertyNode.Attributes["propertytype"].DefaultOrValue(string.Empty);
             property.Value = propertyNode.Attributes["propertytype"].ErrorOrValue();
             //
             var hasXml = !string.IsNullOrEmpty(propertyNode.InnerXml);
