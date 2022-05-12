@@ -41,6 +41,9 @@ namespace Manifold.Tiled
         public Chunk[] Chunks { get; set; } = new Chunk[0];
 
 
+        public int[] TileGIDs { get; set; } = new int[0];
+
+
         /// <summary>
         /// Whether this Data instance has inidividual XML tags for tiles or not.
         /// </summary>
@@ -81,18 +84,16 @@ namespace Manifold.Tiled
             data.Compression = dataNode.Attributes["compression"].DefaultOrParseValue(TiledEnumUtility.Parse<Compression>);
             data.Value = dataNode.Value is null ? "" : data.Value;
             // Children
-            var hasXml = !string.IsNullOrEmpty(dataNode.InnerXml);
+            var hasXml = !string.IsNullOrEmpty(dataNode.OuterXml);
             if (hasXml)
             {
-                try
-                {
-                    data.Tiles = Tile.FromXml(dataNode.InnerXml, "tile");
-                    data.Chunks = Chunk.FromXml(dataNode.InnerXml, "chunk");
-                }
-                catch
-                {
-                    Console.WriteLine("TODO: error parsing <data>");
-                }
+                // Use outer XML since inner is not valid XML
+                data.Tiles = Tile.FromXml(dataNode.OuterXml, "data/tile");
+                data.Chunks = Chunk.FromXml(dataNode.OuterXml, "data/chunk");
+                // Get the inner string / data
+                data.Value = dataNode.InnerText;
+                // Parse the data into their global IDs
+                data.TileGIDs = ParseIndexes(data.Encoding, data.Value);
             }
 
             return data;
