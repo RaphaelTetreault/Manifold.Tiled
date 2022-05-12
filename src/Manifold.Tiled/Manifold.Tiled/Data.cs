@@ -79,11 +79,9 @@ namespace Manifold.Tiled
 
             // Create new from XML
             var data = new Data();
-            // Values
             data.Encoding = dataNode.Attributes["encoding"].DefaultOrParseValue(TiledEnumUtility.Parse<Encoding>);
             data.Compression = dataNode.Attributes["compression"].DefaultOrParseValue(TiledEnumUtility.Parse<Compression>);
-            data.Value = dataNode.Value is null ? "" : data.Value;
-            // Children
+            //
             var hasXml = !string.IsNullOrEmpty(dataNode.OuterXml);
             if (hasXml)
             {
@@ -115,7 +113,7 @@ namespace Manifold.Tiled
                 case Encoding.None: throw new NotImplementedException();
 
                 default:
-                    throw new NotImplementedException();
+                    throw new NotImplementedException($"Unhandled {nameof(Tiled.Encoding)} type.");
             }
         }
 
