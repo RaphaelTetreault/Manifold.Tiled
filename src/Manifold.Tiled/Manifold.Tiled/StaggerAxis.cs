@@ -5,7 +5,7 @@
     /// </summary>
     public enum StaggerAxis : byte
     {
-        x,
         y,
+        x,
     }
 }

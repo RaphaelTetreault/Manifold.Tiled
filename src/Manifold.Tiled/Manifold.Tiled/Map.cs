@@ -42,7 +42,7 @@ namespace Manifold.Tiled
         /// <remarks>
         /// Defaults to -1, which means to use the algorithm default.
         /// </remarks>
-        public int? CompressionLevel { get; set; } = -1;
+        public int CompressionLevel { get; set; } = -1;
 
         /// <summary>
         /// The map width in tiles.
@@ -70,17 +70,17 @@ namespace Manifold.Tiled
         /// <remarks>
         /// Only for hexagonal maps. Is null otherwise.
         /// </remarks>
-        public int? HexSideLength { get; set; } = null;
+        public int HexSideLength { get; set; } = 0;
 
         /// <summary>
         /// For staggered and hexagonal maps, determines which axis is staggered.
         /// </summary>
-        public StaggerAxis? StaggerAxis { get; set; }
+        public StaggerAxis StaggerAxis { get; set; } = StaggerAxis.y;
 
         /// <summary>
         /// For staggered and hexagonal maps, determines whether the “even” or “odd” indexes along the staggered axis are shifted. (since 0.11)
         /// </summary>
-        public StaggerIndex? StaggerIndex { get; set; }
+        public StaggerIndex StaggerIndex { get; set; } = StaggerIndex.Odd;
 
         /// <summary>
         /// X coordinate of the parallax origin in pixels.
@@ -88,7 +88,7 @@ namespace Manifold.Tiled
         /// <remarks>
         /// Defaults to 0.
         /// </remarks>
-        public int? ParallaxOriginX { get; set; } = 0;
+        public double ParallaxOriginX { get; set; } = 0;
 
         /// <summary>
         /// Y coordinate of the parallax origin in pixels.
@@ -96,7 +96,7 @@ namespace Manifold.Tiled
         /// <remarks>
         /// Defaults to 0.
         /// </remarks>
-        public int? ParallaxOriginY { get; set; } = 0;
+        public double ParallaxOriginY { get; set; } = 0;
 
         /// <summary>
         /// The background color of the map.
@@ -193,11 +193,11 @@ namespace Manifold.Tiled
         {
             string tag = "map";
             if (mapNode is null)
-                throw new XmlNodeParseException();
+                throw new XmlNodeParseException("Node is null.");
             if (mapNode.Name != tag)
-                throw new XmlNodeParseException();
+                throw new XmlNodeParseException($"Node named '{mapNode.Name}' is not of type '{tag}'.");
             if (mapNode.Attributes is null)
-                throw new XmlNodeParseException();
+                throw new XmlNodeParseException("Node.Attributes is null.");
 
             // Set map
             var map = new Map();
@@ -205,16 +205,16 @@ namespace Manifold.Tiled
             map.TiledVersion = mapNode.Attributes["tiledversion"]?.Value;
             map.Orientation = mapNode.Attributes["orientation"].ErrorOrParseValue(TiledEnumUtility.Parse<Orientation>);
             map.RenderOrder = mapNode.Attributes["renderorder"].ErrorOrParseValue(TiledEnumUtility.ParseDashed<RenderOrder>);
-            map.CompressionLevel = mapNode.Attributes["compressionlevel"].NullOrParseValue(int.Parse);
+            map.CompressionLevel = mapNode.Attributes["compressionlevel"].DefaultOrParseValue(int.Parse, -1);
             map.Width = mapNode.Attributes["width"].ErrorOrParseValue(int.Parse);
             map.Height = mapNode.Attributes["height"].ErrorOrParseValue(int.Parse);
             map.TileWidth = mapNode.Attributes["tilewidth"].ErrorOrParseValue(int.Parse);
             map.TileHeight = mapNode.Attributes["tileheight"].ErrorOrParseValue(int.Parse);
-            map.HexSideLength = mapNode.Attributes["hexsidelength"].NullOrParseValue(int.Parse);
-            map.StaggerAxis = mapNode.Attributes["staggeraxis"].NullOrParseValue(TiledEnumUtility.Parse<StaggerAxis>);
-            map.StaggerIndex = mapNode.Attributes["staggerindex"].NullOrParseValue(TiledEnumUtility.Parse<StaggerIndex>);
-            map.ParallaxOriginX = mapNode.Attributes["parallaxoriginx"].NullOrParseValue(int.Parse);
-            map.ParallaxOriginY = mapNode.Attributes["parallaxoriginy"].NullOrParseValue(int.Parse);
+            map.HexSideLength = mapNode.Attributes["hexsidelength"].DefaultOrParseValue(int.Parse);
+            map.StaggerAxis = mapNode.Attributes["staggeraxis"].DefaultOrParseValue(TiledEnumUtility.Parse<StaggerAxis>);
+            map.StaggerIndex = mapNode.Attributes["staggerindex"].DefaultOrParseValue(TiledEnumUtility.Parse<StaggerIndex>);
+            map.ParallaxOriginX = mapNode.Attributes["parallaxoriginx"].DefaultOrParseValue(int.Parse);
+            map.ParallaxOriginY = mapNode.Attributes["parallaxoriginy"].DefaultOrParseValue(int.Parse);
             map.BackgroundColor = mapNode.Attributes["backgroundcolor"].NullOrParseValue(Color.FromHexARGB);
             map.NextLayerID = mapNode.Attributes["nextlayerid"].ErrorOrParseValue(int.Parse);
             map.NextObjectID = mapNode.Attributes["nextobjectid"].ErrorOrParseValue(int.Parse);
