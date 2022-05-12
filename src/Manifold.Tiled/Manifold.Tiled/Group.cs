@@ -52,6 +52,9 @@ namespace Manifold.Tiled
         public Color? TintColor { get; set; } = null;
 
 
+
+        public TiledCollection<Layer> Layers { get; set; } = new TiledCollection<Layer>();
+
         public bool IsVisible
         {
             get => Visible;
@@ -80,10 +83,16 @@ namespace Manifold.Tiled
             var group = new Group();
             group.ID = groupNode.Attributes["id"].ErrorOrParseValue(uint.Parse);
             group.Name = groupNode.Attributes["name"].ErrorOrValue();
-            group.OffsetX = groupNode.Attributes["offsetx"].ErrorOrParseValue(int.Parse);
-            group.OffsetY = groupNode.Attributes["offsety"].ErrorOrParseValue(int.Parse);
-            group.Visible = groupNode.Attributes["visible"].ErrorOrParseValue(int.Parse);
+            group.OffsetX = groupNode.Attributes["offsetx"].DefaultOrParseValue(int.Parse);
+            group.OffsetY = groupNode.Attributes["offsety"].DefaultOrParseValue(int.Parse);
+            group.Visible = groupNode.Attributes["visible"].DefaultOrParseValue(int.Parse, 1);
             group.TintColor = groupNode.Attributes["tintcolor"].NullOrParseValue(Color.FromHexARGB);
+            //
+            var hasXml = !string.IsNullOrEmpty(groupNode.InnerXml);
+            if (hasXml)
+            {
+                group.Layers.AddRange(Layer.FromXml(groupNode.InnerXml, $"layer"));
+            }
 
             return group;
         }
