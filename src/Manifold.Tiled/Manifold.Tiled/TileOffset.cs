@@ -46,9 +46,9 @@ namespace Manifold.Tiled
         }
 
         public static TileOffset[] FromXmlNodes(XmlDocument document, string xpath)
-            => TiledXmlExtensions.FromXmlNodes(document, xpath, FromXmlNode);
+            => TiledParser.FromXmlNodes(document, xpath, FromXmlNode);
 
         public static TileOffset[] FromXml(string xml, string xpath)
-            => TiledXmlExtensions.FromXml(xml, xpath, FromXmlNode);
+            => TiledParser.FromXml(xml, xpath, FromXmlNode);
     }
 }

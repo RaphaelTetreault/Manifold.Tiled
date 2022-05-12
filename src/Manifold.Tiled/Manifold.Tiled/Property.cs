@@ -134,9 +134,9 @@ namespace Manifold.Tiled
         }
 
         public static Property[] FromXmlNodes(XmlDocument document, string xpath)
-            => TiledXmlExtensions.FromXmlNodes(document, xpath, FromXmlNode);
+            => TiledParser.FromXmlNodes(document, xpath, FromXmlNode);
 
         public static Property[] FromXml(string xml, string xpath)
-            => TiledXmlExtensions.FromXml(xml, xpath, FromXmlNode);
+            => TiledParser.FromXml(xml, xpath, FromXmlNode);
     }
 }

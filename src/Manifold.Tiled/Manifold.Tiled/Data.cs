@@ -99,10 +99,10 @@ namespace Manifold.Tiled
         }
 
         public static Data[] FromXmlNodes(XmlDocument document, string xpath)
-            => TiledXmlExtensions.FromXmlNodes(document, xpath, FromXmlNode);
+            => TiledParser.FromXmlNodes(document, xpath, FromXmlNode);
 
         public static Data[] FromXml(string xml, string xpath)
-            => TiledXmlExtensions.FromXml(xml, xpath, FromXmlNode);
+            => TiledParser.FromXml(xml, xpath, FromXmlNode);
 
 
         public static int[] ParseIndexes(Encoding encoding, string data)

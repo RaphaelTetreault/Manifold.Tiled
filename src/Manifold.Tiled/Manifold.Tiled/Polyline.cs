@@ -39,9 +39,9 @@ namespace Manifold.Tiled
         }
 
         public static Polyline[] FromXmlNodes(XmlDocument document, string xpath)
-            => TiledXmlExtensions.FromXmlNodes(document, xpath, FromXmlNode);
+            => TiledParser.FromXmlNodes(document, xpath, FromXmlNode);
 
         public static Polyline[] FromXml(string xml, string xpath)
-            => TiledXmlExtensions.FromXml(xml, xpath, FromXmlNode);
+            => TiledParser.FromXml(xml, xpath, FromXmlNode);
     }
 }

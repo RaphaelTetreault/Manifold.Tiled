@@ -2,15 +2,10 @@
 
 namespace Manifold.Tiled
 {
-    public static class TiledXmlExtensions
+    public static class TiledParser
     {
-        //public static string SafeValue(this XmlAttribute? attr, string ifNullValue)
-        //{
-        //    if (attr is null)
-        //        return ifNullValue;
-        //    else
-        //        return attr.Value;
-        //}
+
+        public delegate T Parse<T>(string value);
 
         public static string ErrorOrValue(this XmlAttribute? attr)
         {
@@ -28,72 +23,58 @@ namespace Manifold.Tiled
                 return attr.Value;
         }
 
-        //public static T SafeParseValue<T>(this XmlAttribute? attr, Func<string, T> parseFunction, T ifNullValue)
-        //{
-        //    if (attr is null)
-        //        return ifNullValue;
-        //    else
-        //        return parseFunction.Invoke(attr.Value);
-        //}
-
-        public static T DefaultOrParseValue<T>(this XmlAttribute? attr, Func<string, T> parseFunction, T @default)
+        public static T DefaultOrParseValue<T>(this XmlAttribute? attr, Parse<T> parse, T @default)
         {
             if (attr is null)
                 return @default;
             else
-                return parseFunction.Invoke(attr.Value);
+                return parse.Invoke(attr.Value);
         }
 
-        public static T? DefaultOrParseValue<T>(this XmlAttribute? attr, Func<string, T> parseFunction)
+        public static T? DefaultOrParseValue<T>(this XmlAttribute? attr, Parse<T?> parse)
         {
-            return DefaultOrParseValue(attr, parseFunction, default(T));
+            return DefaultOrParseValue(attr, parse, default(T));
         }
 
-        public static T ErrorOrParseValue<T>(this XmlAttribute? attr, Func<string, T> parseFunction)
+        public static T ErrorOrParseValue<T>(this XmlAttribute? attr, Parse<T> parse)
         {
             if (attr is null)
                 throw new NullReferenceException("XML Atrtibute is null.");
             else
-                return parseFunction.Invoke(attr.Value);
+                return parse.Invoke(attr.Value);
         }
 
-
-
-        public static T? NullOrParseValue<T>(this XmlAttribute? attr, Func<string, T> parseFunction)
+        public static T? NullOrParseValue<T>(this XmlAttribute? attr, Parse<T> parse)
         {
             if (attr is null)
                 return default(T);
             else
-                return parseFunction.Invoke(attr.Value);
+                return parse.Invoke(attr.Value);
         }
 
 
 
+        public delegate T ParseNode<T>(XmlNode? node);
 
-
-
-
-        public delegate T FromXmlNodeFunc<T>(XmlNode? node);
-
-        public static T[] FromXmlNodes<T>(XmlDocument xml, string xpath, FromXmlNodeFunc<T> function)
+        public static T[] FromXmlNodes<T>(XmlDocument xml, string xpath, ParseNode<T> parseNode)
         {
             var nodes = xml.SelectNodes(xpath);
             var values = new T[nodes.Count];
             for (int i = 0; i < values.Length; i++)
             {
-                var tilesetNode = nodes[i];
-                values[i] = function(tilesetNode);
+                var node = nodes[i];
+                values[i] = parseNode(node);
             }
             return values;
         }
 
-        public static T[] FromXml<T>(string xml, string xpath, FromXmlNodeFunc<T> function)
+        public static T[] FromXml<T>(string xml, string xpath, ParseNode<T> parseNode)
         {
             var document = new XmlDocument();
             document.LoadXml(xml);
 
             var node = document.SelectNodes(xpath);
-            var values = FromXmlNodes(document, xpath, function);
+            var values = FromXmlNodes(document, xpath, parseNode);
 
             return values;
         }
