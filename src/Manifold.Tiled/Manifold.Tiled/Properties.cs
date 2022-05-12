@@ -40,7 +40,9 @@ namespace Manifold.Tiled
 
             // Create new from XML
             var properties = new Properties();
-            properties.Values = Property.FromXml(propertiesNode.InnerXml, "property");
+            // Using innerXml results in error: XML cannot resolve root node, so you need to pass the
+            // outer XML and parse it by providing the path through the root.
+            properties.Values = Property.FromXml(propertiesNode.OuterXml, "properties/property");
 
             return properties;
         }

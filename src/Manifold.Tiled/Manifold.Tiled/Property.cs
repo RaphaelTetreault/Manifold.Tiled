@@ -123,7 +123,7 @@ namespace Manifold.Tiled
             property.Name = propertyNode.Attributes["name"].ErrorOrValue();
             property.Type = propertyNode.Attributes["type"].DefaultOrParseValue(TiledEnumUtility.Parse<PropertyType>);
             property.PropertyType = propertyNode.Attributes["propertytype"].DefaultOrValue(string.Empty);
-            property.Value = propertyNode.Attributes["propertytype"].ErrorOrValue();
+            property.Value = propertyNode.Attributes["value"].ErrorOrValue();
             //
             var hasXml = !string.IsNullOrEmpty(propertyNode.InnerXml);
             if (hasXml)
