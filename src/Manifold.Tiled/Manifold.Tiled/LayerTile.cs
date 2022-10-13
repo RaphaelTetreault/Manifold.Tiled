@@ -42,5 +42,34 @@ namespace Manifold.Tiled
 
         public static LayerTile[] FromXml(string xml, string xpath)
             => TiledParser.FromXml(xml, xpath, FromXmlNode);
+
+        public static LayerTile[] FromCSV(string csvChunk)
+        {
+            // Split CSV into lines separated by carriage return and newline
+            // First and last lines are empty. Select range from +1 to -1 from end
+            var csvRows = csvChunk.Split("\r\n")[1..^1];
+            // Chunks are square, so get col width by getting number of valid rows
+            int columnWidth = csvRows.Length;
+
+            int numTiles = csvRows.Length * columnWidth;
+            var tiles = new LayerTile[numTiles];
+
+            for (int row = 0; row < csvRows.Length; row++)
+            {
+                int baseX = row * columnWidth;
+                var rowDigits = csvRows[row].Split(',');
+                for (int col = 0; col < columnWidth; col++)
+                {
+                    string digit = rowDigits[col];
+                    int gid = int.Parse(digit);
+
+                    int tileIndex = baseX + col;
+                    tiles[tileIndex] = new LayerTile();
+                    tiles[tileIndex].gid = gid;
+                }
+            }
+
+            return tiles;
+        }
     }
 }

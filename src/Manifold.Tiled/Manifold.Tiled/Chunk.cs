@@ -68,7 +68,13 @@ namespace Manifold.Tiled
             var hasXml = !string.IsNullOrEmpty(chunkNode.InnerXml);
             if (hasXml)
             {
-                chunk.Tiles = LayerTile.FromXml(chunkNode.InnerXml, "layertile");
+                // Pretty hacky check.
+                // If infinite map, text for chunk is just "raw" CSV/data
+                bool isValidXml = chunkNode.InnerText[0] == '<';
+                if (isValidXml)
+                    chunk.Tiles = LayerTile.FromXml(chunkNode.InnerXml, "layertile");
+                else
+                    chunk.Tiles = LayerTile.FromCSV(chunkNode.InnerText);
             }
             return chunk;
         }

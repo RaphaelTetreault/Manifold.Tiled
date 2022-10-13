@@ -157,13 +157,13 @@ namespace Manifold.Tiled
             // Values
             tileset.FirstGID = tilesetNode.Attributes["firstgid"].ErrorOrParseValue(int.Parse);
             tileset.Source = tilesetNode.Attributes["source"]?.Value;
-            tileset.Name = tilesetNode.Attributes["name"].ErrorOrValue();
-            tileset.TileWidth = tilesetNode.Attributes["tilewidth"].ErrorOrParseValue(int.Parse);
-            tileset.TileHeight = tilesetNode.Attributes["tileheight"].ErrorOrParseValue(int.Parse);
+            tileset.Name = tilesetNode.Attributes["name"].DefaultOrValue(string.Empty);
+            tileset.TileWidth = tilesetNode.Attributes["tilewidth"].DefaultOrParseValue(int.Parse);
+            tileset.TileHeight = tilesetNode.Attributes["tileheight"].DefaultOrParseValue(int.Parse);
             tileset.Spacing = tilesetNode.Attributes["spacing"].NullOrParseValue(int.Parse);
             tileset.Margin = tilesetNode.Attributes["margin"].NullOrParseValue(int.Parse);
-            tileset.TileCount = tilesetNode.Attributes["tilecount"].ErrorOrParseValue(int.Parse);
-            tileset.Columns = tilesetNode.Attributes["columns"].ErrorOrParseValue(int.Parse);
+            tileset.TileCount = tilesetNode.Attributes["tilecount"].DefaultOrParseValue(int.Parse);
+            tileset.Columns = tilesetNode.Attributes["columns"].DefaultOrParseValue(int.Parse);
             tileset.ObjectAlignment = tilesetNode.Attributes["objectalignment"].DefaultOrParseValue(TiledEnumUtility.Parse<ObjectAlignment>);
             // Child nodes
             var hasXml = !string.IsNullOrEmpty(tilesetNode.InnerXml);

@@ -151,8 +151,8 @@ namespace Manifold.Tiled
             var hasXml = !string.IsNullOrEmpty(objectGroupNode.InnerXml);
             if (hasXml)
             {
-                objectGroup.Properties = Properties.FromXml(objectGroupNode.InnerXml, "properties").GetOnlyValueOrNull();
-                objectGroup.Objects = Object.FromXml(objectGroupNode.InnerXml, "object");
+                objectGroup.Properties = Properties.FromXml(objectGroupNode.OuterXml, "objectgroup/properties").GetOnlyValueOrNull();
+                objectGroup.Objects = Object.FromXml(objectGroupNode.OuterXml, "objectgroup/object");
             }
 
             return objectGroup;

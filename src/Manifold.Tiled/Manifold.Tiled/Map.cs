@@ -233,9 +233,9 @@ namespace Manifold.Tiled
 
         public static Map FromFile(string path)
         {
-            var isExtensionTmx = path.EndsWith(".tmx");
-            if (!isExtensionTmx)
-                throw new FileLoadException("Provided file path is not a Tiled .tmx file.");
+            //var isExtensionTmx = path.EndsWith(".tmx");
+            //if (!isExtensionTmx)
+            //    throw new FileLoadException("Provided file path is not a Tiled .tmx file.");
 
             var doesFileExist = File.Exists(path);
             if (!doesFileExist)

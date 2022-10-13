@@ -63,7 +63,7 @@ namespace Manifold.Tiled
         ///  <remarks>
         /// Defaults to 0.
         /// </remarks>
-        public int Width { get; set; } = 0;
+        public double Width { get; set; } = 0;
 
         /// <summary>
         /// The height of the object in pixels.
@@ -71,7 +71,7 @@ namespace Manifold.Tiled
         ///  <remarks>
         /// Defaults to 0.
         /// </remarks>
-        public int Height { get; set; } = 0;
+        public double Height { get; set; } = 0;
 
         /// <summary>
         /// The rotation of the object in degrees clockwise around (x, y).
@@ -203,8 +203,8 @@ namespace Manifold.Tiled
             @object.Type = objectNode.Attributes["type"].DefaultOrValue(string.Empty);
             @object.X = objectNode.Attributes["x"].ErrorOrParseValue(double.Parse);
             @object.Y = objectNode.Attributes["y"].ErrorOrParseValue(double.Parse);
-            @object.Width = objectNode.Attributes["width"].ErrorOrParseValue(int.Parse);
-            @object.Height = objectNode.Attributes["height"].ErrorOrParseValue(int.Parse);
+            @object.Width = objectNode.Attributes["width"].DefaultOrParseValue(double.Parse);
+            @object.Height = objectNode.Attributes["height"].DefaultOrParseValue(double.Parse);
             @object.Rotation = objectNode.Attributes["rotation"].DefaultOrParseValue(float.Parse);
             @object.GID = objectNode.Attributes["gid"].NullOrParseValue(int.Parse);
             @object.Visible = objectNode.Attributes["visible"].DefaultOrParseValue(int.Parse, 1);
@@ -212,12 +212,12 @@ namespace Manifold.Tiled
             var hasXml = !string.IsNullOrEmpty(objectNode.InnerXml);
             if (hasXml)
             {
-                @object.Properties = Properties.FromXml(objectNode.InnerXml, "properties").GetOnlyValueOrNull();
-                @object.Ellipse = Ellipse.FromXml(objectNode.InnerXml, "ellipse").GetOnlyValueOrNull();
-                @object.Point = Tiled.Point.FromXml(objectNode.InnerXml, "point").GetOnlyValueOrNull();
-                @object.Polygon = Polygon.FromXml(objectNode.InnerXml, "polygon").GetOnlyValueOrNull();
-                @object.Polyline = Polyline.FromXml(objectNode.InnerXml, "polyline").GetOnlyValueOrNull();
-                @object.Text = Text.FromXml(objectNode.InnerXml, "text").GetOnlyValueOrNull();
+                @object.Properties = Properties.FromXml(objectNode.OuterXml, "object/properties").GetOnlyValueOrNull();
+                @object.Ellipse = Ellipse.FromXml(objectNode.OuterXml, "object/ellipse").GetOnlyValueOrNull();
+                @object.Point = Tiled.Point.FromXml(objectNode.OuterXml, "object/point").GetOnlyValueOrNull();
+                @object.Polygon = Polygon.FromXml(objectNode.OuterXml, "object/polygon").GetOnlyValueOrNull();
+                @object.Polyline = Polyline.FromXml(objectNode.OuterXml, "object/polyline").GetOnlyValueOrNull();
+                @object.Text = Text.FromXml(objectNode.OuterXml, "object/text").GetOnlyValueOrNull();
             }
 
             return @object;

@@ -34,8 +34,9 @@ namespace Manifold.Tiled
 
             // Create new from XML
             var point = new Point();
-            point.x = pointNode.Attributes["x"].ErrorOrParseValue(int.Parse);
-            point.y = pointNode.Attributes["y"].ErrorOrParseValue(int.Parse);
+            // Very strange. This data is optional...
+            point.x = pointNode.Attributes["x"].DefaultOrParseValue(int.Parse);
+            point.y = pointNode.Attributes["y"].DefaultOrParseValue(int.Parse);
 
             return point;
         }

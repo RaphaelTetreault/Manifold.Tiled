@@ -119,7 +119,11 @@ namespace Manifold.Tiled
 
         private static int[] ParseIndexesCSV(string data)
         {
-            var cells = data.Split(',');
+            var sanitizedData = data
+                .Replace('\r', ' ') // remove carriage return
+                .Replace('\n', ' ') // remove newlines
+                .Replace("    ", ","); // replace 4 spaces with comma (make boundary between chunks)
+            var cells = sanitizedData.Split(',');
             var indexes = new int[cells.Length];
             for (int i = 0; i < indexes.Length; i++)
                 indexes[i] = int.Parse(cells[i]);
