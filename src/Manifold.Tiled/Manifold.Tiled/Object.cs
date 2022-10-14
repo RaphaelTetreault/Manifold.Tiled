@@ -39,6 +39,14 @@ namespace Manifold.Tiled
         /// <remarks>
         /// Defaults to "".
         /// </remarks>
+        public string Class { get; set; } = string.Empty;
+
+        /// <summary>
+        /// The type of the object. An arbitrary string.
+        /// </summary>
+        /// <remarks>
+        /// Defaults to "".
+        /// </remarks>
         public string Type { get; set; } = string.Empty;
 
         /// <summary>
@@ -201,6 +209,7 @@ namespace Manifold.Tiled
             @object.ID = objectNode.Attributes["id"].ErrorOrParseValue(int.Parse);
             @object.Name = objectNode.Attributes["name"].DefaultOrValue(string.Empty);
             @object.Type = objectNode.Attributes["type"].DefaultOrValue(string.Empty);
+            @object.Class = objectNode.Attributes["class"].DefaultOrValue(string.Empty);
             @object.X = objectNode.Attributes["x"].ErrorOrParseValue(double.Parse);
             @object.Y = objectNode.Attributes["y"].ErrorOrParseValue(double.Parse);
             @object.Width = objectNode.Attributes["width"].DefaultOrParseValue(double.Parse);
